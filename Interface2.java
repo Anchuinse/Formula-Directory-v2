@@ -6,10 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.AreaAveragingScaleFilter;
-import java.lang.reflect.Array;
+import java.util.Random;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Interface2 extends JFrame implements ActionListener
         //next create the 'pop-up' windows for the subjects by having an if statement (if button label contains numbers and z=9)
@@ -19,9 +17,9 @@ public class Interface2 extends JFrame implements ActionListener
     Timer timer = new Timer(10, this);            //delay of the welcome screen (4500 was original delay)
     Database2 database = new Database2();
     ArrayList<Formula2> formulae = database.getFormulae();
-    JComboBox selection1 = keyWords();
-    JComboBox selection2 = keyWords();
-    JComboBox selection3 = keyWords();
+    JComboBox selection1 = elementWords();
+    JComboBox selection2 = rangeWords();
+    JComboBox selection3 = descriptors();
     JComboBox selection4 = keyWords();
     JPanel homepage = homepage();
 
@@ -67,23 +65,36 @@ public class Interface2 extends JFrame implements ActionListener
                 "lower the chances of deviation without affecting the resultant powers, but this is not necessary. Customers that have more than one vial that is not Balance should be aware that predicting " +
                 "how the powers will manifest will be much more difficult. Environment also plays a roll when imbibing our mixtures, so notify staff as to your preferences. We have included a list of the PRT classifications, " +
                 "ratings, and a brief description of each for reference, and staff will be on hand at all times to answer questions on specific formulas, the mixing process, or anything you need to make your decision!");
+        text.setEditable(false);
         text.setSize(1200,150);
         text.setLineWrap(true);
         top_panel.add(text);
 
         JPanel bot_panel = new JPanel();                            //bot panel with series buttons
-        bot_panel.setLayout(new GridLayout(1,5));
+        bot_panel.setLayout(new GridLayout(1,4));
         for (int i = 0; i< homeButtons().size(); ++i)
         {
             bot_panel.add(homeButtons().get(i));
         }
 
         JPanel search_panel = new JPanel();
-        search_panel.setLayout(new GridLayout(1,4));
+        search_panel.setLayout(new GridLayout(1,6));
+        selection1.setRenderer(new MyComboBoxRenderer("ELEMENT TYPE"));
+        selection1.setSelectedIndex(-1);
         search_panel.add(selection1);
+        selection2.setRenderer(new MyComboBoxRenderer("RANGE/TARGET TYPE"));
+        selection2.setSelectedIndex(-1);
         search_panel.add(selection2);
+        selection3.setRenderer(new MyComboBoxRenderer("DESCRIPTOR"));
+        selection3.setSelectedIndex(-1);
         search_panel.add(selection3);
+        selection4.setRenderer(new MyComboBoxRenderer("ALL KEYWORDS"));
+        selection4.setSelectedIndex(-1);
         search_panel.add(selection4);
+        for (int i = 0; i < searchButtons().size(); ++i)
+        {
+            search_panel.add(searchButtons().get(i));
+        }
 
         panel.add(top_panel);
         panel.add(bot_panel);
@@ -345,6 +356,8 @@ public class Interface2 extends JFrame implements ActionListener
         return frame;
     }
 
+    //-----------------------------------------
+
     private JComboBox<String> keyWords()
     {
         JComboBox<String> selection = new JComboBox<String>();
@@ -355,6 +368,38 @@ public class Interface2 extends JFrame implements ActionListener
         return selection;
     }
 
+    private JComboBox<String> rangeWords()
+    {
+        JComboBox<String> selection = new JComboBox<String>();
+        for (int i = 0; i < database.getRangeWords().size(); ++i)
+        {
+            selection.addItem(database.getRangeWords().get(i));
+        }
+        return selection;
+    }
+
+    private JComboBox<String> elementWords ()
+    {
+        JComboBox<String> selection = new JComboBox<String>();
+        for (int i = 0; i < database.getElementWords().size(); ++i)
+        {
+            selection.addItem(database.getElementWords().get(i));
+        }
+        return selection;
+    }
+
+    private JComboBox<String> descriptors ()
+    {
+        JComboBox<String> selection = new JComboBox<String>();
+        for (int i=0; i < database.getDescriptors().size(); ++i)
+        {
+            selection.addItem(database.getDescriptors().get(i));
+        }
+        return selection;
+    }
+
+    //-----------------------------------------
+
     private ArrayList<JButton> homeButtons()
     {
         ArrayList<JButton> buttons = new ArrayList<JButton>();
@@ -362,17 +407,29 @@ public class Interface2 extends JFrame implements ActionListener
         JButton info_page = new JButton("Classifications");
         JButton rating_infopage = new JButton("PRT Ratings");
         JButton guide_page = new JButton("Directory Guide");
-        JButton search_button = new JButton("Search");
+        //JButton search_button = new JButton("Search");
         buttons.add(instruction_page);
         buttons.add(info_page);
         buttons.add(rating_infopage);
         buttons.add(guide_page);
-        buttons.add(search_button);
+        //buttons.add(search_button);
         instruction_page.addActionListener(this);
         info_page.addActionListener(this);
         rating_infopage.addActionListener(this);
         guide_page.addActionListener(this);
+        //search_button.addActionListener(this);
+        return buttons;
+    }
+
+    private ArrayList<JButton> searchButtons()
+    {
+        ArrayList<JButton> buttons = new ArrayList<JButton>();
+        JButton search_button = new JButton("Search");
+        JButton clear_button = new JButton("Clear");
+        buttons.add(search_button);
+        buttons.add(clear_button);
         search_button.addActionListener(this);
+        clear_button.addActionListener(this);
         return buttons;
     }
 
@@ -392,17 +449,43 @@ public class Interface2 extends JFrame implements ActionListener
     private ArrayList<Formula2> searchFormulas()
     {
         ArrayList<Formula2> wanted_list = new ArrayList<Formula2>();
-        String word1 = (String) selection1.getSelectedItem();
-        String word2 = (String) selection2.getSelectedItem();
-        String word3 = (String) selection3.getSelectedItem();
-        String word4 = (String) selection4.getSelectedItem();
-        for (int i = 0; i < database.getFormulae().size(); ++i)
+        ArrayList<Object> keywords_wanted = new ArrayList<>();
+        if (!(selection1.getSelectedIndex() == -1)) {keywords_wanted.add(selection1.getSelectedItem());}
+        if (!(selection2.getSelectedIndex() == -1)) {keywords_wanted.add(selection2.getSelectedItem());}
+        if (!(selection3.getSelectedIndex() == -1)) {keywords_wanted.add(selection3.getSelectedItem());}
+        if (!(selection4.getSelectedIndex() == -1)) {keywords_wanted.add(selection4.getSelectedItem());}
+        if (keywords_wanted.size() == 0)
         {
-            if (database.getFormulae().get(i).getKeywords().contains(word1) && database.getFormulae().get(i).getKeywords().contains(word2) && database.getFormulae().get(i).getKeywords().contains(word3) && database.getFormulae().get(i).getKeywords().contains(word4))
+            Random rand_num = new Random();
+            int r = rand_num.nextInt(formulae.size()) - 1;
+            for (int i = 0; i < 120; ++i)
             {
-                wanted_list.add(database.getFormulae().get(i));
+                int pointer = i + r;
+                if (pointer > formulae.size() - 1)
+                {
+                    wanted_list.add(formulae.get(pointer - formulae.size()));
+                }
+                else
+                {
+                    wanted_list.add(formulae.get(pointer));
+                }
             }
         }
+        else
+        {
+            for (int i = 0; i < formulae.size(); ++i) {
+                boolean wanted = true;
+                for (int j = 0; j < keywords_wanted.size(); ++j) {
+                    if (formulae.get(i).getKeywords().contains(keywords_wanted.get(j).toString()) == false) {
+                        wanted = false;
+                    }
+                }
+                if (wanted == true) {
+                    wanted_list.add(formulae.get(i));
+                }
+            }
+        }
+
         return wanted_list;
     }
 
@@ -455,6 +538,16 @@ public class Interface2 extends JFrame implements ActionListener
                 }
             }
         }
+        else
+        {
+            frame.setLocation(0,380);
+            frame.setSize(1440,520);
+            main.setLayout(new GridLayout(20,6));
+            if(wantedButtons().size() > 120)
+            {
+                System.out.println("Dietz you need to increase the max searchResults because whatever parameters you entered are met by over 120 formulas.");
+            }
+        }
 
         for (int i = 0; i < buttons.size(); ++i)
         {
@@ -501,6 +594,16 @@ public class Interface2 extends JFrame implements ActionListener
         if (input == "Search")
         {
             JFrame frame = searchResults();
+            z=0;
+        }
+        if (input == "Clear")
+        {
+            selection1.setSelectedIndex(-1);
+            selection2.setSelectedIndex(-1);
+            selection3.setSelectedIndex(-1);
+            selection4.setSelectedIndex(-1);
+            validate();
+            repaint();
             z=0;
         }
         if (e.getSource() == timer)

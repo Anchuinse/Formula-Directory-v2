@@ -1,4 +1,3 @@
-import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -8,7 +7,10 @@ import java.util.Collections;
 public class Database2
 {
     ArrayList<Formula2> formulae = new ArrayList<Formula2>();
-    ArrayList<String> keywords = new ArrayList<String>();
+    ArrayList<String> keywords = new ArrayList<>();
+    ArrayList<String> rangewords = new ArrayList<>();
+    ArrayList<String> elementwords = new ArrayList<>();
+    ArrayList<String> descriptors = new ArrayList<>();
 
     public Database2()
     {
@@ -17,15 +19,15 @@ public class Database2
         initializeKeywords();
     }
 
-    public ArrayList<Formula2> getFormulae()
-    {
-        return formulae;
-    }
+    public ArrayList<Formula2> getFormulae() {return formulae;}
 
-    public ArrayList<String> getKeywords()
-    {
-        return keywords;
-    }
+    public ArrayList<String> getKeywords() {return keywords;}
+
+    public ArrayList<String> getRangeWords() {return rangewords;}
+
+    public ArrayList<String> getElementWords() {return elementwords;}
+
+    public ArrayList<String> getDescriptors() {return descriptors;}
 
     public ArrayList<String> getAlphabet() {
         ArrayList alphabet = new ArrayList();
@@ -69,7 +71,7 @@ public class Database2
                 "The first step of the power involves tagging the target and then the second involves manipulating the targets in some way. The manifested powers tend toward a utility, although directly defensive " +
                 "and offensive are also likely. Common deviations include desire to avoid touching objects, even in powers where involuntary discharge would be harmless or a seemingly tertiary power that leaves " +
                 "glowing handprints everywhere. Worrisome deviations rare.", "short-range, utility, common, versatile"));
-        formulae.add(new Formula2("Peregrine","Y2001",10,1,2,1,3,"Formula Y2001 grants personal flight in nearly every case. The flight is usually accompanied by a cosmetic effect, " +
+        formulae.add(new Formula2("Peregrine","Y2001",10,1,2,0,3,"Formula Y2001 grants personal flight in nearly every case. The flight is usually accompanied by a cosmetic effect, " +
                 "either a sound, sight, or etc. that has no practical effect. The only known deviation [Y2001-014] developed feathered wings. These wings also seemed cosmetic and had no obvious role in flight. Slowest " +
                 "flight time recorded from a Y2001 patient was 83km/hr.", "flight, safe, reliable, movement, self"));
         formulae.add(new Formula2("Undertake","P8605",4,7,5,1,5,"The overarching theme of sample P8605 seems to be creating a fixation (in self or in others) on a given problem " +
@@ -86,14 +88,14 @@ public class Database2
                 "the patient. Several patients developed a modified version of these auras that worked primarily on machines, causing static or corrupted footage files. No known deviations besides one possible case (G7160-087). " +
                 "After imbibing, patient disappeared and could no longer be detected. Unknown whether this was a deviation or a very powerful power that also bypassed the Manton limit. An accurate power rating is nearly impossible " +
                 "for G7160. Powers range from barely perceptible to incredibly exploitable. Patients will be closely monitored in case countermeasures need to be deployed.","safe, stealth, aura, unique, other"));
-        formulae.add(new Formula2("Granule","H0104",8,8,7,6,6,"Sample H0104 represents one of the most consistent formulas for obtaining a reliable Changer ability. Every patient developed " +
-                "an alternate form that consisted of a nebulus cloud of particulate matter. The exact type of matter is variable between patients. The most common deviations involve the patient's body leaking their associated element " +
-                "which then orbits until they shift into the nebulus and back to collect the leaked matter. Every patient showed the ability to rotate the nebulus at high speeds to 'sand blast' targets. One notable outlier is H0104-212, " +
-                "212 could create, among other things, a grenade that turned all inorganic matter to dust.","unique, changer, reliable, elemental"));
+        formulae.add(new Formula2("Nexus","H0104",8,8,7,6,6,"Sample H0104 represents one of the most consistent formulas for obtaining a reliable Changer ability. Every patient developed " +
+                "an alternate form that consisted of a nebulus, telekinetic cloud of particulate matter. The exact type of matter is variable between patients, some even being 'invisible' telekinetic storms, seen only by the orbitting objects. " +
+                "The most common deviations involve the patient's body leaking their associated element which then orbits until they shift into the nebulus and back to collect the leaked matter. Every patient showed the ability to rotate " +
+                "the cloud at high speeds to 'sand blast' targets. One notable outlier is H0104-212, 212 could create, among other things, a grenade that turned all inorganic matter to dust.","unique, changer, reliable, elemental, telekinesis"));
         formulae.add(new Formula2("Vanguard", "A5525",9,2,5,2,4,"Sample A5525 has only ever provided personal effects. These usually manifest as physical transformations, but in rare cases patients " +
                 "have developed personal forcefields, with the most extreme example only extending twenty inches from the patients fingers (A5525-012). Physical changes can include regeneration, claws, tails, and stone skin (A5525-001). " +
                 "However, most durability granted usually does not manifest in a change. It is primarily seen as a normal individual who, for example, cannot be cut (A5525-083). The only true non-durable subject was a Tinker (A5525-161) " +
-                "who specialized in biological durability and regeneration. A5525-161 created a serum that allowed a dog to sustain a land mine blast without apparent injury.","self, durability, safe, common"));
+                "who specialized in biological durability and regeneration. A5525-161 created a serum that allowed a dog to sustain a land mine blast without apparent injury.","self, durability, common"));
         formulae.add(new Formula2("Igneous","J3257", 6,6,8,4,7, "Sample J3257 is optimal for any customer who idolizes volcanoes. It can provide a vast array of powers, all involving a " +
                 "common ability to generate lava. Examples: toggled aura that heated rock to magma (J3257-013), pools of lava used as portals (J3257-105), a lava golem Changer (J3257-009), animate lava vipers (J3257-104), lava skin (J3257-007). " +
                 "Most patients possess a secondary immunity to the heat, some even enjoying it. Other predictable outcomes included glowing eyes, and craig-like " +"fissures in the patient's skin (both temporary and active when using powers). " +
@@ -106,22 +108,22 @@ public class Database2
         formulae.add(new Formula2("Layer","K4613", 1,4,5,2,3, "Sample K4613 exhibits a unique array of powers that it grants patients. Almost all varieties have been observed, elemental powers " +
                 "as often as those that manipulate the laws of physics or the behavior of others. Every power has the unique property that, to reach its full potential, must be applied several times over. Many patients develop seemingly " +
                 "trivial powers that, with enough time for preparation, end up rivalling any competent cape. Some K4613 powers had lasting effects and could be layered over time while others had to be stacked all at once before " +
-                "releasing the power. Deviations are as varied as the powers given. Tinker powers are quite common, with the same trend of layering effects.", "safe, variable, tinker, utility"));
-        formulae.add(new Formula2("Jaunt","F1976", 8,3,5,1,4, "Sample F1976 is so named as it grants a teleportation or portal Mover power. Most patients had relatively short range limits, " +
+                "releasing the power. Deviations are as varied as the powers given. Tinker powers are quite common, with the same trend of layering effects.","variable, tinker, utility"));
+        formulae.add(new Formula2("Jaunt","F1976", 8,3,5,0,4, "Sample F1976 is so named as it grants a teleportation or portal Mover power. Most patients had relatively short range limits, " +
                 "the largest topping out around 300m. Basic, line of sight teleportation is a commonly granted power, but many patients have unique 'flavours' of powers. The more interesting examples include a teleporter who slowed time " +
                 "around their exit point (F1976-005) and a portal maker that turned all vertical surfaces in an area into portals with random destinations (F1976-109). F1976 is perfect for those customers that are looking to exhibit a " +
                 "'trickster' motif in their costumed behavior. Subjects often aided the fight by repositioning their allies out of danger and into more advantageous positions. When solo, subjects had to exhibit ingenuity to take down more " +
                 "durable foes. The one weakness shared by 95% of F1976 were powers that affected areas larger than their maximum range.", "teleportation, movement, safe, reliable, short-range, mid-range, utility"));
-        formulae.add(new Formula2("Deus","T8120", 9,6,6,2,6, "Sample T8120 is perfect for capes who wish to participate in combat indirectly. It provides, with 100% accuracy, a Master-type projection " +
-                "power, essentially creating a puppet for the patient to control. The only significant deviations observed involved mental changes; no significant physical deviations were obeserved. Some projections were merely illusions while " +
+        formulae.add(new Formula2("Deus","T8120", 9,6,6,4,6, "Sample T8120 is perfect for capes who wish to participate in combat indirectly. It provides, with 100% accuracy, a Master-type projection " +
+                "power, quickly creating a semi-autonomous ally from nowhere. The only significant deviations observed involved mental changes; no significant physical deviations were obeserved. Some projections were merely illusions while " +
                 "others were incredibly durable. A few projections even demonstrated abilities of their own, one of the more powerful being one that detonated upon destruction, creating a sphere of a jelly-like solid (D8120-301). Subject D8120-035, " +
                 "for example, was an introverted, docile man. When projecting his construct, a sixty foot lion, he became aggressive and violent. Subject terminated after threatening to reveal us to authorities unless we permanently boosted his powers " +
-                "(a currently impossible feat).", "creation, master, safe, reliable, singular"));
-        formulae.add(new Formula2("Prince", "T7895", 3,7,5,1,5, "Sample T7895 toes the line between Shaker and Master for almost all subjects. The large majority of subjects gained the ability to manifest " +
+                "(a currently impossible feat).", "creation, master, reliable, singular"));
+        formulae.add(new Formula2("Prince", "T7895", 3,7,5,3,5, "Sample T7895 toes the line between Shaker and Master for almost all subjects. The large majority of subjects gained the ability to manifest " +
                 "one or two 'minions' although some required direct, conscious control while others required only general direction. Arguably these are Master-type abilities (ex. a pair of shadow cats [T7895-120]), but it is difficult to see how " +
                 "manipulating a crystal spear (T7895-095) or a small sun (T7895-013) classifies as anything except Blaster and Shaker, respectively. Secondary Mover ratings from riding the manifestation can be excepted in cases where manifestations are " +
                 "solid enough to support the patient. Customers looking for a puppeteer theme should definitely consider T7895. It may not provide a puppet in the traditional sense, but it will guarantee the general theme will be adhered to, albeit with a " +
-                "secondary theme as well.","master, AoE, safe, creation"));
+                "secondary theme as well.","master, AoE, creation"));
         formulae.add(new Formula2("Rime","J2105", 8,5,7,3,6, "Sample J2105 grants powers that tend to drastically lower temperature and/or inertia in an area, usually in close proximity to the subject. " +
                 "Some auras extend several hundred feet while other powers only effect the subject's own body. A few subjects demonstrated the ability to blast a large area not centered on them, usually as a cone or grenade, for a similar effect. " +
                 "Minor deviations usually involve perpetually cold skin, constant cloudy breath, or a frosting of the subject's eyes. In essence, J2105 is the prime formula for those customers looking to make a name for themselves as a frost-themed cape. " +
@@ -130,27 +132,27 @@ public class Database2
         formulae.add(new Formula2("Pinnacle","Q9768", 8,3,4,2,4, "Although the Q-series of formulas are grouped as commonly producing Tinker powers, sample Q9768 is the only formula to only produce Tinkers. Sample Q9768 tends " +
                 "to produce Tinkers with specializations focused around optimizing technology. Known examples include miniaturization, durable machinery, regenerating machines, and machines with near-limitless redundancies. Q9768 Tinkers can be just as useful in corporate and " +
                 "industrial/economic settings as they are in combat situations. As Tinker powers only affect the brain, only mental deviations have been observed. A notable subject developed a disgust with any non-Tinker tech and refused to use 'lesser' technology. " +
-                "Even some rough-looking Tinker tech was not 'up to standard' (Q9768-052).","technology, tinker, safe, reliably, common, utility, versatile"));
-        formulae.add(new Formula2("Lodestone","Q2207", 3,8,7,1,6,"Continuing the Q-series pattern of creating Tinkers, sample Q2207 grants Tinker powers involving attraction fields, barriers, and other area of effect, " +
+                "Even some rough-looking Tinker tech was not 'up to standard' (Q9768-052).","technology, tinker, reliably, common, utility, versatile"));
+        formulae.add(new Formula2("Lodestone","Q2207", 3,8,7,3,6,"Continuing the Q-series pattern of creating Tinkers, sample Q2207 grants Tinker powers involving attraction fields, barriers, and other area of effect, " +
                 "zone-type effects. Around half of patients instead developed non-Tinker powers with the same general base of zone-type powers, lending them toward a Shaker classification. The granted powers can be as specific as an attraction field that draws in " +
                 "bacteria (Q2207-006) or as general as a forcefield sphere that prevents everything from crossing the edge (Q2207-105). Q2207 powers are often the deciding factors in conflicts when paired with one or more complimentary parahumans.",
-                "AoE, tinker, mid-range, utility, unique, safe"));
+                "AoE, tinker, mid-range, utility, unique"));
         formulae.add(new Formula2("Minutia", "U1085", 2,7,5,3,4, "Sample U1085 grants control of one or more objects, never bigger than 10cm. The shape and material of the manipulated objects varies from person to person; " +
                 "exotic materials are seen almost as often as common materials and energy types. Some patients only control one object while others control thousands. Some create their own objects, others must find them. Customers should not assume controlling small " +
                 "objects means they have a small effect; many of our U1085 customers have gone on to attain notable positions within the PRT. Ratings resulting from U1085 can be just as the powers themselves: Brute 3 protected by forcefields (U1085-008) up to Shaker 9 " +
                 "who controls gravity-point orbs (U1085-113).","variable, telekinesis, versatile, environment"));
-        formulae.add(new Formula2("Matrix","P4412", 4,1,7,2,5, "Sample P4412 chiefly grants Thinker powers that deal with massive amounts of data. It is common for granted powers to be quite taxing, but they are also, " +
+        formulae.add(new Formula2("Matrix","P4412", 4,1,7,3,5, "Sample P4412 chiefly grants Thinker powers that deal with massive amounts of data. It is common for granted powers to be quite taxing, but they are also, " +
                 "very commonly, powerful. The mass of data can be complex, like ranking six possible answers to a question in order of 'correctness' (P4412-077) or simple, like the names and locations of every person around the patient (P4412-093). In some instances " +
                 "subjects will have a second classification because of the nature of information they are recieving. P4412-093 is a good example of this, gaining a sub-classification of Stranger 2 as they could avoid trained guards that were looking for them. Mental " +
-                "deviations often tend toward anxiety and mania involving visual hallucinations. ","unique, safe, mental, solution, utility, sensory, self"));
-        formulae.add(new Formula2("Jealousy","S0111",8,7,5,0,6,"Sample S0111 almost always grants Trump-class powers that deal with copying other parahumans' powers. No serious deviations have been noted. The powers are " +
+                "deviations often tend toward anxiety and mania involving visual hallucinations. ","unique, mental, solution, utility, sensory, self"));
+        formulae.add(new Formula2("Jealousy","S0111",8,7,5,1,6,"Sample S0111 almost always grants Trump-class powers that deal with copying other parahumans' powers. No serious deviations have been noted. The powers are " +
                 "sometimes copied to others, sometimes to the subject and some subjects copy the power(s) in full while other patients copy the powers in a weakened or altered state. Those rare examples of non-copying powers place severe restrictions on the powers of others. " +
                 "No S0111 subjects have demonstrated the Trump ability to buff the powers of others. To fully utilize a S0111 power, customers must be adaptable to every situation. It requires an intelligent, fast-learning individual to take advantage of every facet of " +
-                "the powers the subject copies.", "power-affecting, reliable, safe, versatile"));
+                "the powers the subject copies.", "power-affecting, reliable, versatile"));
         formulae.add(new Formula2("Observance","K5082", 2,9,9,1,8, "Sample AK5082 reliably grants powerful abilities in the top tier of their given categories, and was created by mixing several volatile test formulas with " +
                 "balancing agents. Interestingly, all powers granted by sample K5082 seem to be either only active while being observed, or they only work when not observed. It appears all powers activate automatically and cannot be switched off by the users. " +
                 "Full implementation of K5082 formulas will likely require organized coordination with other team members. Every power classification, to varying degrees, has been demonstrated from K5082. Powers that only work when not observed were more likely to be Mover or Stranger " +
-                "while those that only work while observed were more likely to be Brute, Shaker, or Master.","variable, unique, powerful, safe, expensive"));
+                "while those that only work while observed were more likely to be Brute, Shaker, or Master.","variable, unique, powerful, expensive"));
         formulae.add(new Formula2("Medley","K1882", 3,2,3,0,3, "Sample K1882 was created by mixing many stable, but mostly inert, test formulas. This sample always produces the equivalent of a grab-bag parahuman. These " +
                 "parahumans often have 3 or more unique powers, but each individual power is relatively weak. The number of powers and the nature of each power varies from patient to patient, although most powers would not rate higher than a 2 or 3 on the PRT scale. " +
                 "This lack of raw power should not dissuade customers. This formula is perfect for customers looking to have several options at any given time. Customers should also note that although each power may have a relatively low rating, uniquely combining " +
@@ -166,17 +168,17 @@ public class Database2
                 "anyone they come in contact with as commonly as there have been patients that created mirages of random people in the vicinity (G0100-130). The vast majority of power effects are temporary, but a select few are permanent. One of the most 'traumatic' permanent " +
                 "powers was an individual (G0100-018) who possessed the ability to switch appearances with another. This formula's deviation have an interesting facet of not making the subject 'abnormal'. The most common deviation is changing the subject's appearance to that " +
                 "of another human. This doesn't make civilian life impossible, but it does make forged documentation essential in those cases where deviations are present. It also requires explaining to family members, if the relationship is wished to continue, that the subject " +
-                "triggered (must create a realistic trigger event).","temporary, unique, variable, safe, stealth"));
-        formulae.add(new Formula2("Wonderland","W5040", 2,8,5,2,4, "Time, gravity, and dimensional distortion powers are often sought-after, but W5040 puts an interesting " +
+                "triggered (must create a realistic trigger event).","temporary, unique, variable, stealth"));
+        formulae.add(new Formula2("Wonderland","W5040", 2,8,5,4,4, "Time, gravity, and dimensional distortion powers are often sought-after, but W5040 puts an interesting " +
                 "spin on them. They often provide bizarre, seemingly nonsensical powers with no clear use ingrained. Fans of Lewis Carroll's Alice in Wonderland will enjoy the unique powers provided by W5040. Even though " +
                 "each power may seem to be useless in combat, W5040 powers tend to have one or more caveats that make them useful, in a roundabout sort of way. A good example is W5040-101 who was granted a space warping " +
                 "ability. They described the experience as the world 'bending around like silly putty' and they could float between parts that bent close to each other. While 'floating' between places, they disappeared " +
                 "from reality as we know it. They could even take a volunteer with them by holding their hand, although video feeds failed to work within and volunteers became incredibly anxious when asked to describe " +
-                "their experiences within. The act of traveling in this dimension often made W5040-101 appear and disappear intermitently around the battlefield.","variable, unique, safe, exotic, versatile, utility, " +
+                "their experiences within. The act of traveling in this dimension often made W5040-101 appear and disappear intermitently around the battlefield.","variable, unique, exotic, versatile, utility, " +
                 "time, gravity, dimensional, movement, whimsical"));
-        formulae.add(new Formula2("FOREIGN ELEMENT A", "Z9999", 0,10,10,10,10,"DATA FILE CORRUPTED","variable, powerful, deviant, unique, expensive, utility"));
+        formulae.add(new Formula2("FOREIGN ELEMENT A", "Z9997", 0,10,10,10,10,"DATA FILE CORRUPTED","variable, powerful, deviant, unique, expensive, utility"));
         formulae.add(new Formula2("FOREIGN ELEMENT B", "Z9998", 0,10,10,10,10,"DATA FILE CORRUPTED", "variable, powerful, deviant, unique, expensive, lethal"));
-        formulae.add(new Formula2("FOREIGN ELEMENT C", "Z9997",0,10,10,10,10,"DATA FILE CORRUPTED","variable, powerful, deviant, unique, expensive, defensive"));
+        formulae.add(new Formula2("FOREIGN ELEMENT C", "Z9999",0,10,10,10,10,"DATA FILE CORRUPTED","variable, powerful, deviant, unique, expensive, defensive"));
         formulae.add(new Formula2("Sanguine","V1313", 3,8,6,5,5, "As its name would suggest, V1313 powers deal exclusively with blood. Although primarily human blood, " +
                 "there were subjects that had powers that could either use animal blood just as well as human blood, or even a rare few that worked exclusively with animal blood. Subject V1313-026 could soak her hands " +
                 "in fresh animal blood to see everything it had ever seen, but it did not work with humans. Preliminary tests show that she can at least splotches of light and dark if she soaked her hands in tree sap. " +
@@ -205,34 +207,34 @@ public class Database2
                 "one or more of an object's properties but do not involve modifying, manipulating, or adding additional traits, as the more complex R-series formulas tend to do. The resulting strategies tend to be as limited and " +
                 "straightforward as the powers themselves. The simple nature of the formula biases the resulting classifications to Brute, Mover, and Strikers heavily. This is not to say a few of the other classifications aren't " +
                 "seen, just that they are much weaker and rarer than their more common counterparts. As far as theming goes, R0116 is perfect for those looking for a medieval theme as customers tend to require bulky weapons and armor " +
-                "to fully utilize their power.","safe, temporary, object-oriented, inorganic, simple"));
+                "to fully utilize their power.","temporary, object-oriented, inorganic, simple"));
         formulae.add(new Formula2("Savant", "P4872", 7,2,3,1,2, "Sample P4872 is perfect for those that desire a non-visible power that isn't as complex as traditional Thinkers " +
                 "and Tinkers. It, in essence, provides proficiency in one or more skills. They do not receive inhuman aid (computer hackers will not be notified of programs they cannot detect through their own means) but they " +
                 "represent the most skilled people in each field. P4872-058, a subject that is gifted in understanding and applying fighting styles, will not lose a one on one fight unless there are extenuating circumstances. " +
                 "Although it initially appeared that P4872 granted proficiency in one skill, it was determined that it actually gives understanding of a much smaller set of information. For example, P4872-058 was actually gifted " +
                 "with perfect understanding of the kinesthetic movement of the human body. This allows them to predict the force and arch of each movement. Thinkers, Strikers, Strangers, and Movers are the only classifications " +
-                "that are seen with any consistency.", "common, safe, cheap, mental, skills, self"));
+                "that are seen with any consistency.", "common, cheap, mental, skills, self"));
         formulae.add(new Formula2("Midas", "H8723", 6,7,5,3,4, "The legendary King Midas could transmute all that he touched to gold. Although we cannot promise it will be gold, " +
                 "formula H8723 grants subjects the ability to change matter into various metals and rocks. Striker ratings are common, although Brute or Changer ratings will apply to those subjects that affect their own person " +
                 "while Shaker ratings are also common. A rather ingenuitive subject with the ability to self-transmute into stone was able to inflitrate a company by posing as a statue and obtained a Stranger rating. Movers, " +
                 "Blasters, and Tinkers are also seen, but at significantly lower rates. Customers should be aware that their has never been an instance of a H8723 subject that could affect living tissue other than their own " +
                 "(unlike in the myth), so customers needn't worry about obtaining a too-lethal power.","short-range, inorganic, elemental, stone, metal"));
-        formulae.add(new Formula2("Territory", "K2051", 5,7,4,1,4, "Sample K2051 always provides powers with a Shaker classification that involve setting up a given territory. " +
+        formulae.add(new Formula2("Territory", "K2051", 5,7,4,0,4, "Sample K2051 always provides powers with a Shaker classification that involve setting up a given territory. " +
                 "Inside this territory, subjects either have new abilities, or their standard abilities are greatly amplified. Setting up this territory tends to be quite slow, although their are some individuals who can set up a " +
                 "small territory quite fast. These areas are easily denoted by one or more lasting changes. K2051-043 created black spires that allowed him to see everything in an area around them while K2051-048 left a sphere " +
                 "of constant daylight, inside which they were invisible. The spires were, as far as we could tell, permanent, while the daylight did seem to begin to fade after three years. Although K2051 subjects tend to have " +
                 "lower ratings, this is only due to the fact that they require more time than normal to set up their area of effect. The PRT often raises their ratings when forced to engage them inside their own territory.",
                 "safe, permanent, preparation, AoE"));
-        formulae.add(new Formula2("Rupture", "V0459", 8,8,8,2,8, "Sample V0459 is chiefly dangerous by distrupting organic tissues. Even survivors of V0459 attacks are left " +
+        formulae.add(new Formula2("Rupture", "V0459", 8,8,8,4,8, "Sample V0459 is chiefly dangerous by distrupting organic tissues. Even survivors of V0459 attacks are left " +
                 "horribly disfigured, Even accomplished 'healing' parahumans have problems healing V0459 damage. Strikers and Brutes are the most common. In a minor subset of subjects, the tissue disruption is actually a " +
                 "secondary characteristic of the trait. V0459-072 was a Master who placed a cancerous tumor onto people's eyes. If not removed, the tumo would eventually grow to encompass their face, at which time, they " +
                 "became thralls of the subject. The tumor would continue to grow until the victims were monstrous humanoids with ten or more limbs, each tipped with claws and able to climb vertical surfaces. 072 was killed " +
-                "by the Protectorate within thirteen days of first villainous activity. Biological Tinkers are rare, though seen.","reliable, unique, powerful, safe, expensive, terrifying, lethal, organic"));
+                "by the Protectorate within thirteen days of first villainous activity. Biological Tinkers are rare, though seen.","reliable, unique, powerful, expensive, terrifying, lethal, organic"));
         formulae.add(new Formula2("Dilation", "X6428", 6,8,5,1,6, "Although the practical effect differs, all sample X6428 subjects gained the ability to slow down, " +
                 "speed up, or stop time. X6428-401 was a powerful Mover/Shaker who slowed down time in a wide area that stayed centered on him. X6428-032 on the other hand could make bubbles of slowed time to trap " +
                 "others. In one instance, X6428-032 used this to 'hibernate' for 3 weeks in the middle of a desert when left without food and water. To them, it was a mere 2 seconds (rounded up from their stopwatch). " +
                 "These bubbles could also be utilized as shields due to their membranes being a nigh-impenetrable zone of stopped time. Customers that purchase X6428 should not expect Master, Changer or Trump ratings " +
-                "as these have never been seen.","unique, safe, exotic, time"));
+                "as these have never been seen.","unique, exotic, time"));
         formulae.add(new Formula2("Dauntless", "D2169", 8,4,4,0,4, "Sample D2169 is perfect for those that want to skirt around the outskirts of combat, protecting allies " +
                 "from dangers, both seen and unseen. D2169 grants increased durability (and in rare cases invulnerability) to themselves and/or one or more of their allies. It never only effects the subject; some subjects " +
                 "can effect themselves as well as others, but most only effect others. A loose rule is that the more people a power effects, the weaker the durability. A notable exception to this rule was D2169-088 who " +
@@ -248,19 +250,19 @@ public class Database2
                 "starting, changing, or stopping movement of one or more objects. As this is a F-series formula, there is a near 100% certainty that X4737 will grant a Breaker state that will effect the subject's personal " +
                 "movement. This can, as all formulas do, manifest in different ways. X4737-063 had a Breaker state that ignored friction and gravity while X4737-075 gained a Breaker state that absorbed all incoming kinetic " +
                 "energy and allowed her to utilize it in motion upon entering a different state. Other powers relating to movement should be expected, X4737-079 could shoot bolts of what she called 'motion poison', and as " +
-                "movement is such a key staple of X4737, a Mover classification or sub-classification should be expected, although not guaranteed.","common, safe, utility, movement, kinetic, exotic, gravity"));
+                "movement is such a key staple of X4737, a Mover classification or sub-classification should be expected, although not guaranteed.","common, utility, movement, kinetic, exotic, gravity"));
         formulae.add(new Formula2("Gargoyle", "H3275", 7,5,5,3,4, "Sample H3275 provides increased durability by changing the subject's body into a much harder material. Some " +
                 "subjects developed an entirely separate Changer form that they could shift in and out of at will. This Changer form was always between 5ft and 10ft tall and resembled a creature made of stone (thus this formula's " +
                 "name). More often, subjects gained the ability to Changer their body into a harder material (a much milder transformation). The exact nature of these transformations varied, both by type of transformation and " +
                 "material. H3275-099, for example, gained an unconscious, reactive power that caused him to shift his body into a titanium alloy every time his body felt a strong impact.","durability, self, elemental, stone, " +
                 "metal, changer, defensive"));
-        formulae.add(new Formula2("Squamate", "D4166", 7,7,4,1,5, "Seemingly based on reptilian regeneration, sample D4166 is perfect for customers looking to be a field medic. " +
+        formulae.add(new Formula2("Squamate", "D4166", 7,7,4,2,5, "Seemingly based on reptilian regeneration, sample D4166 is perfect for customers looking to be a field medic. " +
                 "It grants regeneration and other useful healing-type abilities to others, and in over 80% of the cases, subjects also retained the abilities for themselves. Many D4166 subjects have been able to treat incredibly " +
                 "traumatic wounds and have their targets up and walking within minutes. D4166-121 possessed an aura that caused all wounds in a 50 yard radius of him to clot quickly, to the point where losing an arm was not a " +
                 "life-threatening injury. His aura also helped serious injuries, such as lost arms, to heal. In three tests, he healed three lost arms, eventually to full usage over the course of a month for each arm. Other " +
-                "subjects can grant subjects temporary 'stitches' that make wounds effectively null for several minutes, although medical treatment is required after these stitches expire.","simple, safe, utility, others, " +
+                "subjects can grant subjects temporary 'stitches' that make wounds effectively null for several minutes, although medical treatment is required after these stitches expire.","simple, utility, others, " +
                 "regeneration, organic"));
-        formulae.add(new Formula2("Patience", "K0398", 8,7,8,0,7, "Perfect for those customers looking to be revered as telekinetic powerhouse, sample K0398 is the most powerful " +
+        formulae.add(new Formula2("Patience", "K0398", 8,7,8,1,7, "Perfect for those customers looking to be revered as telekinetic powerhouse, sample K0398 is the most powerful " +
                 "K-series formula, in terms of raw telekinetic strength. Subjects on the low end of the spectrum often lift upwards of 1800 lbs. It is common for subjects to have limitations, such as having to physically touch " +
                 "objects before they can lift them, having a range limit, or having to take time to 'ramp up' their power before reaching maximum strength. K0398 subjects who can adequately utilize their powers are likely to be " +
                 "the hardest hitters on any given team and should expect to be well-known. A rare few K0398 subjects had more severe limitations in the vein of limiting what they could control. This includes subject K0398-002 who " +
@@ -270,9 +272,9 @@ public class Database2
                 "and many of their granted powers work better after dark. Some subjects even have developed the ability to absorb light or manifest darkness. The powers of V2446 vary greatly, with each of the twelve classifications " +
                 "being present. Deviations vary from the subject always looking as if they are standing in shadow to subjects developing severe photophobia. Examples of V2446 powers follow. Subject V2446-095 could generate clouds " +
                 "of shadow that dulled powers and senses alike. Those trapped inside report feelings mild vertigo and powered individuals say they felt as though their powers were 'foggy'. Subject V2446-049 gained near-instant " +
-                "regeneration, to the point where running through the shadow of a telephone pole healed a cut across his chest that would have required forty stitches.","unique, safe, terrifying, utility, stealth, sensory, " +
+                "regeneration, to the point where running through the shadow of a telephone pole healed a cut across his chest that would have required forty stitches.","unique, terrifying, utility, stealth, sensory, " +
                 "shadow"));
-        formulae.add(new Formula2("Queen Administrator", "U1062", 8,4,4,0,4, "Master powers are almost a guarantee with sample U1062. Sample U1062 grants control over a group of objects, " +
+        formulae.add(new Formula2("Queen Administrator", "U1062", 8,4,4,1,4, "Master powers are almost a guarantee with sample U1062. Sample U1062 grants control over a group of objects, " +
                 "animals, etc. This can include a type of animal (U1062-013 could control birds while U1062-012 could manipulate insects) or technology (U1062-126 interfaced with technology) or various other things. Some subjects are " +
                 "limited by the number of minions they can have at any given time, while others are only limited by the number of minions in their range. The amount of control and other abilities also varies, U1062-013 could look " +
                 "through the eyes of birds, but U1062-012 could control every minute movement of every insect in her swarm. Minor secondary abilities, such as a multitasking ability, are common to help subjects maximize their power. " +
@@ -281,53 +283,53 @@ public class Database2
                 "unaided flight, increased durability, and at least a minor strength boost. The exact ratio of these powers differs from subject to subject, with some subjects reaching near-sonic speed while others are nigh-indestructible. " +
                 "A few subjects were only stronger and/or more durable while flying, but the vast majority have the standard powerset that is always active. Customers should know that, due to this powerset being so common, it will " +
                 "be more difficult than average to achieve any sort of notoriety. This is a very useful, jack-of-all-trades powerset that is almost always useful on any team and in any situation.","simple, versatile, self, " +
-                "durability, strength, movement, flight, reliable, common, safe"));
-        formulae.add(new Formula2("Speedster", "F2323", 8,3,5,1,5, "Sample F2323 is perfect for customers longing to possess super speed. Almost all subjects gained some sort of increased " +
+                "durability, strength, movement, flight, reliable, common"));
+        formulae.add(new Formula2("Speedster", "F2323", 8,3,5,2,5, "Sample F2323 is perfect for customers longing to possess super speed. Almost all subjects gained some sort of increased " +
                 "speed. The average running speed of sample F2323 subjects is around 100 feet per second. A large number of subjects develop variations of traditional super speed. This can include trails of varying effects to personal " +
                 "effects such as a loss of tangibility while moving. Subject F2323-138 was able to run 82 feet per second and gained density temporarily while running. At maximum speed, subject F2323-138 could hit with nearly four times " +
-                "the force of the average human. They could not speed up part of their body, however, they must be running to use their abilities.","reliable, common, safe, simple, utility, self, movement"));
-        formulae.add(new Formula2("Fenrir", "H0810", 6,5,5,3,4, "Sample H0810 provides Changer powers that would, mostly, be called animalistic. This can be anything from large, dense " +
+                "the force of the average human. They could not speed up part of their body, however, they must be running to use their abilities.","reliable, common, simple, utility, self, movement"));
+        formulae.add(new Formula2("Fenrir", "H0810", 6,5,5,4,4, "Sample H0810 provides Changer powers that would, mostly, be called animalistic. This can be anything from large, dense " +
                 "tank-like creatures to small, fast assassin-type creatures. The sub-classifications that H0810 subjects take on vary, but they will mostly be Brutes, Movers, and Strikers. Many of the alternative forms sport wings, " +
                 "toxins, or other adaptions that are seen in many animals on Earth. Interestingly, although all changes from H0810 are biological, there have been several instances where the changes do not represent biology that is " +
                 "currently seen on Earth and is most likely from alien planets. No inorganic or plant matter forms have been seen in H0810, and the more serious deviations tend to be mental in nature, primarily increased aggression " +
                 "and lowered mental clarity.","self, organic, animal, changeer"));
-        formulae.add(new Formula2("Stopgap", "R1177", 6,4,6,2,5, "Sample R1177 grants powers that cause changes, but only for a set amount of time. After that time is allotted, the " +
+        formulae.add(new Formula2("Stopgap", "R1177", 6,4,6,3,5, "Sample R1177 grants powers that cause changes, but only for a set amount of time. After that time is allotted, the " +
                 "effected target(s) will (usually) revert back to it's original state. In some cases, the target is granted certain properties then, after the time has expired, will be given other properties. These secondary properties " +
                 "are usually temporary as well. The changes caused are usually quite drastic and have a large effect on the battle. Subject R1177-055 projected spinning tesseracts that, upon contact, caused inorganic matter to disappear. " +
                 "Exactly 23.6 seconds after contact, the objects would reappear. The objects would be slightly iridescent and have increased durability. These changes were permanent. This made R1177-055 valuable both as an anti-Tinker " +
                 "Blaster and as a supporting Shaker that could slowly reinforce buildings and other equipment over time. Each shot effected approximately 40kg of matter, although R1177-055 could somewhat control this. The power preferred to " +
-                "affect a complete object first before moving on to other objects nearby.","safe, utility, temporary, versatile, object-oriented, inorganic"));
+                "affect a complete object first before moving on to other objects nearby.","utility, temporary, versatile, object-oriented, inorganic"));
         formulae.add(new Formula2("Passage", "F3447", 8,7,8,1,8, "Sample F3447 should definitely be considered for all customers that have a desire to become one of the rare mass teleportation " +
                 "capes. These are highly sought after and many of our former customers have received lucrative employment offers due to their uncommon abilities. The main drawback of sample F3447 is that around 50% of subjects cannot travel " +
                 "using their own ability. This makes them very good at ferrying others around, often moving people across entire continents, but leaves them vulnerable on a battlefield. Depending on the nature of the granted power, this makes " +
                 "some F3447 subjects more valuable in a non-combat, utility sense. As they are so valuable, F3447 are likely to be kept far away from Endbringer battles, so customers not wanting to participate in them are encouraged to look at " +
-                "F3447.","reliable, powerful, safe, expensive, utility, others, long-range, multitude, movement, teleportation"));
-        formulae.add(new Formula2("Horizon", "V2248", 6,9,9,2,9, "Sample V2248 kills by creating incredibly dangerous areas of high pressure, gravity, heat, etc. These zones require several seconds " +
+                "F3447.","reliable, powerful, expensive, utility, others, long-range, multitude, movement, teleportation"));
+        formulae.add(new Formula2("Horizon", "V2248", 6,9,9,3,9, "Sample V2248 kills by creating incredibly dangerous areas of high pressure, gravity, heat, etc. These zones require several seconds " +
                 "to set up and usually allow enough time for those in the area to vacate, but afterward the area becomes inaccessible to all but the most durable of Brutes. The zones themselves can be any shape, number, or size depending on the " +
                 "subject. V2248-010 created up to fourteen black hole singularities that effected a circle with a 8.3ft diameter each while V2248-051 enveloped themselves in a haze that reached temperatures estimated to be inside a dwarf star. " +
                 "V2248 subjects almost always obtain Shaker classifications with subjects like V2248-051 being notable exceptions to this rule. V2248 customers should pair themselves with other Shakers to maximize their effectiveness as it is " +
-                "hard for solo V2248 to do maximum damage due to their ramp up time.","unique, powerful, safe, expensive, terrifying, lethal, exotic, temperature, gravity, AoE"));
+                "hard for solo V2248 to do maximum damage due to their ramp up time.","unique, powerful, expensive, terrifying, lethal, exotic, temperature, gravity, AoE"));
         formulae.add(new Formula2("Cogent", "L8001", 9,3,6,1,6, "Thinkers are often the movers and shakers (metaphorically speakings) of the cape world. They are often plan strategies for everything " +
                 "from day-to-day operations to Endbringer attacks and are key to countering enemy Tinkers. Sample L8001 provides problem-solving Thinker abilities to those customers that choose to purchase it. Although the specifics of each power " +
                 "can change, every one is incredibly helpful in strategizing. The one caveat is that L8001 powers usually lack any precognitive abilities and rely on concrete facts and data being provided to them to work properly. If a L8001 " +
                 "subject is given misinformation when planning, the plan is likely to fail. But customers should note, in experimental situations, 73% of L8001 customers could recoordinate their plans to succeed in the midst of conflict, even " +
-                "after given initial false information.","reliable, basic, safe, utility, mental, solution"));
-        formulae.add(new Formula2("Ailment", "M2301", 8,8,4,0,6, "Sample M2301 causes systemic problems in their targets. These problems, though, are never deadly and are more of a nuisance in the " +
+                "after given initial false information.","reliable, basic, utility, mental, solution"));
+        formulae.add(new Formula2("Ailment", "M2301", 8,8,4,1,6, "Sample M2301 causes systemic problems in their targets. These problems, though, are never deadly and are more of a nuisance in the " +
                 "broad sense of things. It may seem counter-intuitive to many customers, but these can often be the most useful powers in combat as they can be used to their fullest extent without hesitation. M2301-022 was instrumental in the " +
                 "capture of three former Slaughterhouse Nine as they caused severe nausea in everyone in a 100 yard cone in front of them. The majority of targets immediately vomited. M2301-035 became an expert thief that could cause " +
                 "extreme vertigo in everyone within 30ft of them. Other M2301 subjects obtained more... unconventional jobs. M2301-105 could bestow a variety of illnesses from colds to stomach aches and M2301-106 could secrete ticks that " +
-                "remained for years, if not more. Together they started a 'revenge' service wherein others paid them to make others' lives miserable. It should be noted this is a highly abnormal experience.","reliable, unique, safe, " +
+                "remained for years, if not more. Together they started a 'revenge' service wherein others paid them to make others' lives miserable. It should be noted this is a highly abnormal experience.","reliable, unique, " +
                 "temporary, others, organic"));
-        formulae.add(new Formula2("Ragdoll", "D1842", 10,1,4,0,5, "Sample D1842 provides increased durability to the patient. 89% of subjects had no visible indications of their durability " +
+        formulae.add(new Formula2("Ragdoll", "D1842", 10,1,4,1,5, "Sample D1842 provides increased durability to the patient. 89% of subjects had no visible indications of their durability " +
                 "and resembled average humans. The durability is often much more so than other Brutes with the same rating, but D1842 rarely grants increased strength or other effects. The formula is named such because subjects are often " +
                 "thrown around like ragdolls on the battlefield, but are rarely harmed. D1842 subjects tend to not be major threats to their enemy's safety, but they do become quite consistent threats that must be dealt with repeatedly " +
-                "throughout battle. If equipped by a Tinker or otherwise aided, they can become quite dangerous on the battlefield.","reliable, common, safe, simple, defensive, self, durability"));
+                "throughout battle. If equipped by a Tinker or otherwise aided, they can become quite dangerous on the battlefield.","reliable, common, simple, defensive, self, durability"));
         formulae.add(new Formula2("Screen", "U2262", 6,2,6,2,5, "Sample U2262 is primarily concerned with the creation of force fields. This can manifest itself as a primary ability, or as " +
                 "a secondary effect. Shaker classification has been seen in 78% of U2262 subjects and should be expected. Other classifications that have been witnessed are Mover (U2262-129 created a line of force fields in her wake) to " +
                 "Blaster (U2262-115 shot shards that exploded into 'shard webs') Tinker (U2262-091). Sample U2262 subjects are, by the nature of their powers, required to be active on the battlefield to be of use to their team. They are " +
                 "strong against most Blasters, although they are weak against those that manifest things at range or non-linear Movers. These Blasters and Movers are able to bypass the subjects' force fields and often times render them " +
                 "completely moot. The only exception is a handful of U2262 subjects that make opaque/transparent force fields or so many force fields that targeting between the force fields becomes tricky. An even rarer subset have " +
-                "created force fields with Trump abilities that don't allow powers that touch them to work at all.","common, safe, creation, defensive, versatile, force field, shield"));
+                "created force fields with Trump abilities that don't allow powers that touch them to work at all.","AoE, common, creation, defensive, versatile, force field, shield"));
         formulae.add(new Formula2("Dwindle", "S1683", 7,6,6,0,7, "Sample S1683 is relatively straightforward as far as Trump powers go. The main theme among all powers found in S1683 subjects " +
                 "is an ability to reduce, decrease, or suppress the powers of other parahumans. The 'delivery' of this effect is never the same way twice. Some S1683 subjects possess powers with complex effects, only one of which is their " +
                 "Trump ability, while other S1683 subjects' powers are as simple as a touch ability that reduces the effect of other parahumans' powers (S1683-108). Only 3% of S1683 subjects displayed the ability to modify the 'parameters' " +
@@ -338,13 +340,13 @@ public class Database2
                 "it is more likely for powers to sense more concrete phenomena. Seeing infrared is a common minor secondary power and is seen in 47% of subjects. The most common severe deviations seem to be a malformed protection from " +
                 "subjects' senses. In effect, subjects cannot choose to ignore their granted senses. Although this specific instance has not happened, an example of this would be a subject with enhanced hearing that could not ignore " +
                 "even the smallest sounds, making sleeping or holding a conversation almost impossible. Depending on the nature of a given subject's power, Thinker and Stranger classifications are the most common. A rare few Tinkers " +
-                "and Masters have been noted. Tinkers tend to focus on sentries and turrets while the Masters usually can hijack one or more senses of others.","reliable, safe, utility, mental, sensory"));
-        formulae.add(new Formula2("Freefall", "X1614", 7,4,4,1,4, "The Breaker states offered by sample X1614 alter the subjects' relationship with gravity. Some affect gravity's effect " +
+                "and Masters have been noted. Tinkers tend to focus on sentries and turrets while the Masters usually can hijack one or more senses of others.","reliable, utility, mental, sensory"));
+        formulae.add(new Formula2("Freefall", "X1614", 7,4,4,2,4, "The Breaker states offered by sample X1614 alter the subjects' relationship with gravity. Some affect gravity's effect " +
                 "on them, changing its direction or strength among other things, while others affect their effect on gravity in the area. This can result in drawing things to them, pushing things away from them, or any number of other " +
                 "effects. With intelligent use, over 90% of X1614 subjects qualified for at least a minor Mover classification. Stranger ratings are also quite common, although they are never more than minor. Around 66% of X1614 subjects " +
                 "developed secondary, gravity-related powers besides their Breaker state. Due to the nature of gravity, these secondary powers almost always fall into the Shaker category. A good example of this is X1614-033 who is " +
                 "classified as a Shaker/Striker 6, Breaker 4. Her Breaker state allowed her to ignore gravity completely while her touch could cause an object to exhibit a gravitational field similar in strength to Earth. The field " +
-                "extended between 30-50ft from the object before abruptly ending.","reliable, safe, exotic, gravity, AoE, changer"));
+                "extended between 30-50ft from the object before abruptly ending.","reliable, exotic, gravity, AoE, changer"));
         formulae.add(new Formula2("Marrow", "V2301", 7,9,5,2,5, "Sample V2301 is based around the manipulation of bones and the skeletal structure of animals. Most V2301 subjects gained " +
                 "powers that dealt with bones already in existence, although some worked with bones that they drag into existence themselves. Aggressive powers tend to attack with spikes and spears while defensive powers use dense " +
                 "plates of bones to shield themselves and others. The bones that these powers utilize are not porous like normal bones and as such are much denser and harder. Therefore, customers should be advised that the bones from " +
@@ -355,8 +357,8 @@ public class Database2
                 "Sample V0992 is also one of the most diverse V-series formulas in terms of the classifications and power level of the powers it has granted subjects. V0992-111 was a Master 7 with the ability to control all human corpses " +
                 "within an area and give general instructions. V0992-067 was a Blaster 8 who shot a teal ray that decayed organic matter. On the other side of the spectrum, V0992-012 was a Thinker 2 who could project the events of a " +
                 "cadaver's life onto the nearest wall. Interestingly, V0992-012's power worked on animal cadavers as well and currently is working to help understand how poachers are operating in northern Africa. Customers should be " +
-                "noted that most V0992 recipients tend to have lower popularity ratings among the average population; some may see this as an advantage.","unique, safe, terrifying, organic, death"));
-        formulae.add(new Formula2("Numerology", "P5040", 8,6,4,1,5, "Sample P5040, as its name implies, grants mathematical Thinker powers. Although the practical effects can be quite " +
+                "noted that most V0992 recipients tend to have lower popularity ratings among the average population; some may see this as an advantage.","unique, terrifying, organic, death"));
+        formulae.add(new Formula2("Numerology", "P5040", 8,6,4,0,5, "Sample P5040, as its name implies, grants mathematical Thinker powers. Although the practical effects can be quite " +
                 "broad, every subject in the P5040 test group reported the effects as a greatly augmented understanding of numbers and increased calculation speed. Common groups of powers are those relating to angles/projectile pathing, " +
                 "force/motion, and probability. While some subjects have very limited application of their powers (P5040-019 could only run calculations on objects he threw, albeit always hitting his mark), while others are quite " +
                 "broad. P5040-028 was the most outstanding individual, being nearly untouchable because he could see the trajectory, speed, and momentum of every object in his field of view. His grandest feat was falling nearly six " +
@@ -366,27 +368,27 @@ public class Database2
                 "interactions (subject X1322-097 appeared to almost bend reality itself into a caricature of real life by changing how time and space related to one another). Most X1322 subjects are labeled as Breakers, Masters, or " +
                 "Shakers depending on who the rules effect: self, others, and an area, respectively. Ingenuity is always useful to parahumans, but is deceptively necessary in the case of potential X1322 customers. The power to slightly " +
                 "rewrite the laws of reality seems powerful, but without a plan, X1322 powers can quickly just become engines of mindless chaos on a battlefield. PRT ratings will be heavily determined by whether a customer has the " +
-                "foresight to optimally apply the powers they are given.","unique, safe, versatile, complex, utility, exotic"));
+                "foresight to optimally apply the powers they are given.","unique, versatile, complex, utility, exotic"));
         formulae.add(new Formula2("Arbitration", "U2306", 7,7,6,2,6, "Sample U2306 can be seen as the 'balance' formula of the U-series. U2306 never creates or destroys anything, but " +
                 "merely shares the traits of one object with another object. This can manifest as a personal effect all the way up to an effect on an area. Subject U2306-180 could equalize the speed of people in an 80ft diameter area " +
                 "while subject U2306-045 could temporarily 'absorb' the hardness of an object, making steel as fragile as glass while making himself nearly invincible. U2306-045 was able to 'absorb' from 5-10 objects for a maximum " +
                 "of 2 minutes before he lost his grip on it. He described it as trying to hold water; it always eventually leaked out. Shaker or Striker are very common ratings, with Master classifications almost non-existent in " +
                 "U2306 formulas. Many classifications come from non-standard applications of the given power. U2306-035 could switch the temperature of objects within 20ft of herself. She got a Blaster 8 rating after she figured " +
                 "out she was not Manton limited and would routinely switch a person's body temperature with that of the outside environment, sending several heroes into hypothermic shock before she could be caught.",
-                "safe, complex, utility, AoE"));
+                "complex, utility, AoE"));
         formulae.add(new Formula2("Cerberus", "M2250", 8,4, 5,1,4, "Sample M2250 tends to affect an animal or group of animals near the user, oftentimes giving at least limited " +
                 "control over it. Some powers seem to create temporary effects that quickly subside after the subject has been removed from the area. Other times, the effects seem to permanently bond the first animal (or animals) " +
                 "affected to the subject. The number of animals effected or created seems tied to how that type of animal behaves in the wild. This means only one solitary predator is effected, but if the subject controls insects " +
                 "the numbers often range into the hundreds of thousands. It is unclear if the creatures 'created' by this power are truly formed on the spot or if they are transported and then bound like ordinary animals. Many " +
                 "seem to have similar anatomies to other organisms seen in other powers across the globe. Although a rare occurence, some of the 'animals' created are better termed 'spirits'. They can be immaterial, a ghost with " +
                 "powers all their own, or they can appear almost elemental in nature, a creation of loosely floating rocks that appear snake-like in shape. These are exceedingly rare, however, and so we have decided that the " +
-                "Cerberus formula fits best into the M-Series of formulas.","reliable, safe, simple, utility, versatile, aura, organic, animal, master"));
+                "Cerberus formula fits best into the M-Series of formulas.","reliable, simple, utility, versatile, aura, organic, animal, master"));
         formulae.add(new Formula2("Blessing", "R0316", 8,7,5,1,6, "For the more religiously minded, formula R0316 bestows a variety of qualities and powers to items, although R0316 " +
                 "subjects tend to have less control over what exactly these 'blessings' can do. Most of the powers rely on spur of the moment uses in battle. Unlike many R-series formulas, this formula seems to works best when " +
                 "there is absolutely no foreplanning. Blind faith in the power is what drives most R0316 capes to success, although there are always limits. Changes to items tend to be temporary, some lasting no more than several " +
                 "seconds. Most R0316 powers also often have brilliant, over-the-top displays when empowering items, with fire, lightning, and light very common among them. This is a formula that can easily have a theme built around " +
                 "it, often bringing images of paladins in the look of gifted powersets. This is not a good choice for anyone that wants to lay low or those looking to outfit their entire team with super-powered weapons. Those looking " +
-                "to be play a primary, albeit unpredictable, fighter that is not easily forgotten should consider formula R0316.","reliable, safe, theme, versatile, object-oriented, elemental"));
+                "to be play a primary, albeit unpredictable, fighter that is not easily forgotten should consider formula R0316.","reliable, theme, versatile, object-oriented, elemental"));
         formulae.add(new Formula2("Apathy", "L0100", 3,8,9,9, 8, "Heartless killers are the product of L0100. Very few things remain consistent between L0100 except a lack of remorse " +
                 "for literally any of their actions and a power that allows for unrivaled brutality in combat. At this point, many corporate customers looking to hire parahuman hitmen may think the psychological effects of L0100 " +
                 "are minimal, maybe even an asset. Customers should be cautioned that the lack of emotion often leads to sadism and a lack of care for any previous alliances or responsibilities they may have had. Subject L0100-042 " +
@@ -410,7 +412,7 @@ public class Database2
                 "just make the energy disappear all together. A low-level Striker/Shaker, subject K2365-010 could instantly stop the movement of any non-viscous liquid he touched. He was written off as one of the marginally " +
                 "powered, until he helped quell a tsunami wave caused by Leviathan, saving hundreds if not thousands of lives. Sadly he was killed on the third Leviathan attack after this discovery. We advise customers that " +
                 "Tai Chi is a formula best suited to team-oriented capes, although it is still possible to go solo. We must reiterate, however, that creativity and a high aptitude for thinking outside the box is required to " +
-                "counteract the inherent lack of defenses from attacks not covered by the granted power. We do offer premium packages for customers looking for advice post-trigger event.","unique, safe, complex, versatile, " +
+                "counteract the inherent lack of defenses from attacks not covered by the granted power. We do offer premium packages for customers looking for advice post-trigger event.","unique, complex, versatile, " +
                 "elemental, kinetic"));
         formulae.add(new Formula2("Location Location", "W4630", 8,8,6,2,8, "Mover/Shakers are the single most common occurence from formula W4630. The formula principally creates powers dealing " +
                 "with the relation of space, connecting distant places, enlarging or shrinking, on scales both large and small. Masters and Trumps are the only classifications never seen from W4630. Many W4630 subjects have low-level " +
@@ -418,7 +420,7 @@ public class Database2
                 "small as a gnat, was too annoying. Of the classifications that have been presented, Blasters are the rarest and arguably the least effective. Their powers often function as smaller, ranged variants of the other " +
                 "space-warping powers displayed by W4630 capes. The powers from this formula will definitely require some thorough practice to master and we recommend customers train with a team for several weeks before deploying " +
                 "with them in the field. The Trentvale Incident is a perfect example of a W4630 Shaker's team being ill-prepared for the chaos she would sow on the battlefield and all five, including the customer, died because of it. That " +
-                "may be ominous, but we guarantee that W4630 powers are no more dangerous to allies than other powers once everyone becomes comfortable with their presentation.","reliable, unique, safe, expensive, versatile, " +
+                "may be ominous, but we guarantee that W4630 powers are no more dangerous to allies than other powers once everyone becomes comfortable with their presentation.","reliable, unique, expensive, versatile, " +
                 "exotic, space, movement, sensory"));
         formulae.add(new Formula2("Division", "T2770", 6,8,4,1,5, "Almost all subjects that imbibed formula T2770 eventually obtained a Master classification or subclassification. " +
                 "The formula is so titled because the minions most often sprout from either the subject themselves or a target, in one way or another. These minions always have characteristics of their 'parent' and are usually " +
@@ -426,7 +428,7 @@ public class Database2
                 "off into a series of four duplicates of himself over the course of combat. these minions are more often than not temporary, either rapidly decaying or being reabsorbed after use. Another common trope among T2770 " +
                 "powersets are various forms of reanimation or resurrection where if the subject dies while their minions are active one of the minions 'becomes' the subject, with all past memories and abilities. It is unclear if " +
                 "it is a true transfer of consciousness or a mere duplication, but the observed effect remains the same. The most common deviations involve extra sets of body parts, most often eyes and limbs. An interesting example " +
-                "was T2770 who was discovered months after activation to have two independent circulatory systems, including two separate hearts that beat in unison.","unique, safe, creation, utility, temporary, resurrection, " +
+                "was T2770 who was discovered months after activation to have two independent circulatory systems, including two separate hearts that beat in unison.","unique, creation, utility, temporary, resurrection, " +
                 "organic, master"));
         formulae.add(new Formula2("Mimic", "U0995", 3,9,5,1,7, "Formula U0995 always creates powers that must draw on their environment for inspiration. Besides that, there is little " +
                 "that ties the resultant powers together. An example testing batch: U0995-030 developed the ability to shift her general body shape to match those of others, although exact features took some time, U0995-031 could " +
@@ -435,7 +437,7 @@ public class Database2
                 "material. As a quick aside, it is mimicry and not true replication as the subject's bodies do not truly become metallic or anything in-organic, just durable. This was confirmed with a set of Manton limited capes where only the " +
                 "organic-affecting cape could induce any affect on U0995 subjects. Many U0995 subjects have reported this seemingly minor trait has helped them gain a surprise edge in more than one situation against villains (or " +
                 "heroes) who wrongly assume their Changer form is whatever material it appears to be. The power level of this formula varies wildly, but it is truly original, making up for its higher price tag.","variable, " +
-                "unique, safe, utility, organic, environment, changer"));
+                "unique, utility, organic, environment, changer"));
         formulae.add(new Formula2("Balance", "Z0000", 10,1,1,0,2, "The Balance formula is sometimes referred to as the Human formula as it seems to reinforce the idea of a perfect " +
                 "human. This formula gives very mild powers at best, but one thing that should be noted is that it restores the drinker's body to a state of near perfect health. In tests it has cured various cancers, partial and " +
                 "full paralysis, cerebral palsy, and even schizophrenia. This is a one-time occurence during the trigger event and does not always prevent the subjects from becoming ill again in the future from other means. We " +
@@ -469,49 +471,49 @@ public class Database2
                 "a combat-oriented Tinker who, like Hephaestus before them, can outfit their team to survive many fights. While the exact specialization varies, many patterns have emerged during testing. Tinkers focused on weapons build melee weapons " +
                 "83% of the time, while other Tinkers tend toward smaller devices as opposed to large constructions. Of the armor Tinkers (approximately 12% of all Q0125 subjects), almost all produced ornate, decorative armor, very much " +
                 "in the vein of godlike armor. Unlike most other Tinkers, Q0125 subjects have relatively stable equipment that can go weeks at a time without needing maintenance, which aids in them supplying their team and keeping gear in " +
-                "working order. Along with the other formulas named after the Greek pantheon, Q0125 can be used to make a very consistent theme.","common, safe, theme, Olympic, shield, durability, simple, short-range, tinker"));
+                "working order. Along with the other formulas named after the Greek pantheon, Q0125 can be used to make a very consistent theme.","common, theme, Olympic, shield, durability, simple, short-range, tinker"));
         formulae.add(new Formula2("Aphrodite", "T2011", 7,8,6,2,6, "The loveliest of the gods, the subjects who embibed the formula named after Aphrodite continue to enchant people around the " +
                 "globe today. Powers from formula T2011 manipulate the emotions and feelings of others, or give massive insight into the behavior of those around them. Of all the Olympic Pantheon series, Aphrodite subjects are most likely to be " +
                 "gifted with Stranger and Master powers. Deviations are rare but when they appear, they are almost always mental alterations. Violent mood swings, psychopathy, and severe histrionic personality disorder. Interestingly, the presence " +
                 "of a T2011 parahuman lowers the chance of severe deviations in triggering parahumans, suggesting a possible minor Trump characteristic. As only twenty tests of a full Aphrodite formula have been tested to this date, we cannot rule " +
                 "out a strong Trump ability as another possibility. Along with the other formulas named after the Greek pantheon, T2011 can be used to make a very consistent theme. Customers that attempt this theme should be aware, though, that " +
                 "the flashier abilities will draw the focus away from the more subtle powers of T2011 and customers not choosing Hades, Zeus, or Poseidon in particular should be aware that they are not likely to be perceived as one of the leaders " +
-                "on their team.","unique, safe, theme, Olympic, complex, others, mental, emotions, master"));
+                "on their team.","unique, theme, Olympic, complex, others, mental, emotions, master"));
         formulae.add(new Formula2("Hermes", "H0112", 8, 2,4,1,6, "The Hermes formula is, perhaps, the weakest formula in the Olympic Pantheon series in terms of raw power output, but it also one of " +
                 "the only to have a deviation score of only 1. As with all other formulas in the Olympian series, the powers granted by H0112 are related to the god it is named after. In this case, H0112 produces mostly Mover powers, often accompanied " +
                 "by some sort of bright light. In a team full of powerhouses, customers that drink the Hermes formula will have to rely on their quick thinking to maximize their effectiveness. True to the original hooligan, those that perfect their " +
                 "powers will be the nuisance on the battlefield that doesn't go away. Very few non-Movers have any way to keep a H0112 subject from following them wherever they please, and wherever they go, their team is not far behind. Secondary " +
                 "powers with ratings of 1-3 are often seen, although these change drastically from subject to subject, seeming to fit individual personalities. Along with the other formulas named after the Greek pantheon, H0112 can be used to make " +
-                "a very consistent theme.","reliable, common, safe, theme, Olympic, grab-bag, utility, movement, agility"));
+                "a very consistent theme.","reliable, common, theme, Olympic, grab-bag, utility, movement, agility"));
         formulae.add(new Formula2("Ares","I0273",9,1,5,2, 5, "Ares is the cheapest of the Olympic Pantheon formulas and also the most reliable. It always produced a Brute power who's potency was " +
                 "adrenaline-dependent from moment to moment. This means Ares subjects entered a fight strong and only got stronger from there. Obviously the exact power varied, from an aura that encapsulated both the subject and their possessions " +
                 "(I0273-044) to a subject that looked human but whose tissues were reinforced with a sort of carbon mesh that prevented almost any sort of tearing or rupture (I0273-053). Superhuman strength was a common feature, showing up in 91% " +
                 "of cases, but regeneration, even in limited forms, has only appeared in less than 5% of Ares test subjects. It is therefore recommended that customers wishing to purchase Ares have access to proper medical capes or avoid fights with " +
                 "a high likelihood for personal injury. As we often say, know yourself well. Pairing Ares with a regeneration formula is possible, but ill-advised as mixing formulas with entirely unrelated traits has a tendency to increase the " +
-                "chance of deviation. Along with the other formulas named after the Greek pantheon, I0273 can be used to make a very consistent theme.","variable, common, safe, simple, self, short-range, durability, strength"));
+                "chance of deviation. Along with the other formulas named after the Greek pantheon, I0273 can be used to make a very consistent theme.","variable, common, simple, self, short-range, durability, strength"));
         formulae.add(new Formula2("Heisenberg", "V7599", 9,10,8,1,9, "Named after the famous physicist, formula V7599 creates parahumans that emanate 'cosmic' ionizing radiation in 96% of tested " +
                 "cases. The amount of radiation leaked seems to be inversely proportional to the number of secondary powers. The degree of control over the radiation also varies, from a passive field to a controlled, concentrated Blaster-like " +
                 "power. Although their effects on the battlefield may seem underwhelming, the effects of even mild exposure to ionizing radiation can be incredibly dangerous to any form of biological life. Without proper treatment, many people " +
                 "develop cancer, vision problems, even total organ failure. Many teams are ill-equipped to handle V7599 capes without serious risk to themselves, although customers should also be informed that the potency and uniqueness of their " +
-                "powers may draw unwanted attention from both heroes and villians alike. Some of these people will be looking to use the powers, others to make sure the powers won't be used against them.","reliable, unique, powerful, safe, " +
+                "powers may draw unwanted attention from both heroes and villians alike. Some of these people will be looking to use the powers, others to make sure the powers won't be used against them.","reliable, unique, powerful, " +
                 "expensive, lethal, permanent, exotic, radiation"));
         formulae.add(new Formula2("Rodin", "O3293", 8,6,3,1,5, "Those that desire to see across time should consider O3293 as at least a component of their mixture. Nearly all Rodin subjects were " +
                 "able to somehow divine facets of the distant past or far future, although the exact manifestation of these abilities varied wildly. Subject O3293-002 was able to ponder on an object and accurately predict its role in the future, albeit she " +
                 "couldn't predict who or what would interact with it, just that it would do X, Y, and Z before it would be destroyed. Most deviations involved an overly powerful form of the power. An interesting example was a set of conjoined " +
                 "twins that each consumed O3293 at the same time. They deviated, with one only ever being able to view the past and the other only ever seeing the future. Through testing we were able to infer that they no longer sense anything " +
-                "in the present moment, and all of their actions are informed only by their twin view of past and future.","reliable, safe, utility, mental, precognition, postcognition"));
+                "in the present moment, and all of their actions are informed only by their twin view of past and future.","reliable, utility, mental, precognition, postcognition"));
         formulae.add(new Formula2("Niflheim", "U9101",7,4,4,1,5, "The production of ice and snow are the principle facets of formula U9101, named Niflheim after norse legends. Unlike J2105, Rime, " +
                 "which involves lowering temperatures, Niflheim is focused on the actual creation or growth of ice crystals. Approximately 52% of the time, the ice from U9101 parahumans is more durable than traditional ice found on Earth. This " +
                 "ice tends to have a slightly different chemical structure, although this varies among a subset of chemical structures. A very rare few have even demonstrated ice-like formations strong enough to sheer through steel. Deviations " +
                 "tend to be rare, but extreme. Subject U9101-044's body, for example, turned into living ice. Unfortunately, their body must now be kept below freezing temperatures or they will melt. Subject U9101-081 lost all of her teeth, " +
                 "having them replaced by icicles that continually grow in as they melt. She reports a constant pain as they grow in, but it goes away as temperatures drop. However, her powers do not grant her immunity to the cold so staying at " +
-                "low temperatures for too long causes her to risk hypothermia.","safe, creation, environment, elemental, ice"));
+                "low temperatures for too long causes her to risk hypothermia.","creation, environment, elemental, ice"));
         formulae.add(new Formula2("Yggdrasill", "M0744", 7,6,4,2,6,"Trees and tree-like organisms are the domain of M0744. This can manifest as nearly every power classification, from Shakers " +
                 "that grow massive columns of plant material from the earth to Tinkers with artificial tree networks to Changers that morph into a sentient arboretum. Breakers are by far the rarest classification to appear. Although some " +
                 "species of tree are identifiable, many seem to be bark-covered plants from ecosystems not found on Earth. Subject M0744-100 could fire dense 'prime seeds' that quickly grew into a tight thicket of blue-red branches on impact. " +
                 "Although lacking root systems, these brambles seemed to survive well and thrived in helium-rich environments. Brutes from M0744 tend to often have secondary powers of regeneration on top of any durability. Unlike other regenerators, " +
                 "these Brutes most often have to gain energy from a source to heal in any quick fashion. As one could have guessed, these sources continue with the plant 'theme' and most often include forms of photosynthesis or various root systems.",
-                "safe, whimsical, creation, durability, utility, organic, plant"));
+                "whimsical, creation, durability, utility, organic, plant"));
         formulae.add(new Formula2("Ingurgitate", "H1683",6,4,4,0,4, "98% of Breaker states from formula H1683 parahumans either passively or actively absorb one or more forms of energy or matter " +
                 "from the surrounding environment. What exactly Ingurgitate subjects do with what they absorb varies: some use it to power secondary powers, some use it to heal, a few don't seem to do anything with it. The large majority " +
                 "of subjects (between 77-81%) only absorb energy. When combined with other formulas, H1683's absorption effects lessen greatly, and they often apply to the other powers. A good example of this is subject H1683-Q9768-002 " +
@@ -529,13 +531,13 @@ public class Database2
                 "grenades while others leech it through their skin or vomit it across the battlefield. Most deviations (75%) from J1645 formulas are fatal. Subject C1645-338 (a rare, non-fatal deviation) became a constant source of " +
                 "an incredibly thin, slippery acid that leaked out of his palms. Even wearing specially designed gloves don't work well as they soon fill up with acid and overflow. Customers should be aware that due to the nature of " +
                 "acid and acidic damage, it is hard to become a well-known and respected hero. Many of the Protectorate teams don't want leaders with the power to melt people's faces, thus making promotion through the ranks difficult, " +
-                "even if a customer's power rated as an 8 or higher. These same difficulties do not persist if a customer wishes to become a villian.","safe, terrifying, simple, elemental, acid, AoE"));
+                "even if a customer's power rated as an 8 or higher. These same difficulties do not persist if a customer wishes to become a villian.","terrifying, simple, elemental, acid, AoE"));
         formulae.add(new Formula2("Assimilate", "Q3682",4,7,4,1,4, "Formula Q3682 blurs the line that separates organic from inorganic. The Tinkers from formula Q3682 are a fascinating breed, " +
                 "with 18% having Tinker as a secondary rating. The specializations seen in Q3682 Tinkers always involve combining disparate objects into a single, cohesive whole. Cybernetics, repurposing, and even biological technology are " +
                 "common in the parahumans with a primary Tinker rating. The nearly 20% that have a secondary Tinker rating have either localized technokinesis or biokinesis and actively integrate materials into their body or equipment. " +
                 "Subject Q3682-012 was one such Tinker, who specialized in genetic recombination. She was able to modify herself on the fly during combat, taking less than a minute to grow an extra set of arms. Modifying others required " +
                 "laboratory equipment, but she still could sense whether a given set of recombined genes would provide the desired effects. She could even sense the genotypes of those she touched, allowing her to detect genetic diseases " +
-                "(once she was given an example).","safe, versatile, inorganic, technology, organic, tinker"));
+                "(once she was given an example).","versatile, inorganic, technology, organic, tinker"));
         formulae.add(new Formula2("Emissary", "Q3500",6,7,4,1,5, "Communication is the common thread in the formula Q3500. Frequencies and wavelengths, drones and modular weaponry are all " +
                 "observed specializations from Emissary. Although many customers understandably believe that taking Q3500 will put them in a more supportive role, this belief is false. Q3500 capes never program a single, massive object, " +
                 "but this does not mean that their smaller creations are not effective. Subject Q3500-221 had a land-oriented drone specialization that participated in project Clear Forest. An array of 124 drones was able to plan and " +
@@ -547,14 +549,14 @@ public class Database2
                 "Q2528-201 and two assistants spent three months building a hangar within the mountains of Peru. Once completed, the hangar was able to autonomously create aircraft. It stayed in contact with the aircraft it created, " +
                 "and modified future designs as the older models ran into problems. In contrast, subject Q2528-111 created 'backpack bombs' that, while unassuming in size, had a blast radius of nearly 3/4 of a mile. They also had the " +
                 "interesting property of never harming the wearer of the backpack, leading many to fear they would be used in terroristic attacks. This fear eventually led to the assassination of Q2528-111, although the party responsible " +
-                "is not known.","unique, safe, preparation, AoE, tinker, inorganic, technology"));
+                "is not known.","unique, preparation, AoE, tinker, inorganic, technology"));
         formulae.add(new Formula2("Vendaval","U2210",8,5,4,2,5,"Although it can look very similar to telekinesis, formula U2210 only involves aerokinesis. Bludgeoning and slashing attacks " +
                 "are the main form of offense for Vendaval capes as, unlike other U-series parahumans, it is trickier for Vendaval capes to lift large objects in the heat of battle. Most subjects that have a full U2210 formula get at " +
                 "least a minor Mover rating with proper applications of their air control, although a subset have true Mover ratings through a form of flight. These secondary powers are automatic and not consciously controlled around " +
                 "35% of the time. Deviations in formula U2210 are more common than in other U-series formulas, and are usually accompanied by less easily controlled powers. As far as classifications go, most Vendaval capes end up with " +
-                "three or more ratings as their powers have wide applicability in combat. Trumps are the only classification never seen, with the rarest being Changers at 2% of full-formula subjects.","reliable, safe, versatile, " +
+                "three or more ratings as their powers have wide applicability in combat. Trumps are the only classification never seen, with the rarest being Changers at 2% of full-formula subjects.","reliable, versatile, " +
                 "complex, telekinesis, environment, long-range, movement, flight, elemental, air"));
-        formulae.add(new Formula2("Trésaguet","K1893",5,7,5,1,5,"100% of subjects that took a full dose of K1893 have a Mover rating. It produced Tinkers focusing on motion and transportation, " +
+        formulae.add(new Formula2("Trésaguet","K1893",5,7,5,0,5,"100% of subjects that took a full dose of K1893 have a Mover rating. It produced Tinkers focusing on motion and transportation, " +
                 "especially the creation of various modes of transportation. Although its name is taken from one of the first builders of the modern road, vehicles of sea, sky, and space are just as common. The various modes of " +
                 "transportation range from personal hover-boards to massive ships capable of carrying an entire regiment. Some Tinkers produce large groups of vehicles while others only have one vehicle that they continually modify and " +
                 "improve upon. Trésaguet is perfectly suited for motor heads that want to continue tinkering in their garage while also saving the world. Interestingly, mech suits, or some derivative thereof, are seen in 15% of K1893 " +
@@ -565,7 +567,7 @@ public class Database2
                 "etc.) but only 2% have solely utility effects. Formula C7020 is good for those customers that dream of being part of an elite, mobile strike force. Their powers rarely effect large areas, allowing for fighting " +
                 "within buildings without risking its structural integrity, but are still dangerous enough to be a constant threat. The damage done is very hard to predict, with physical damage happening as often as energy damage. " +
                 "Some capes can fire at multiple targets at once while the attacks of others hit harder than expected. C7020-414 was an interesting test subject who fired what appeared to be a dart of blue fire. On contact, the " +
-                "blue flame erupted in a concussive blast that only affected the target it impacted. The explosion was powerful enough to send an average adult human 50 ft. through the air.","reliable, common, safe, simple, " +
+                "blue flame erupted in a concussive blast that only affected the target it impacted. The explosion was powerful enough to send an average adult human 50 ft. through the air.","reliable, common, simple, " +
                 "mid-range, long-range"));
         formulae.add(new Formula2("Artillery", "C3201",7,3,5,1,5,"Reducing the battlefield to rubble is a key tactic for many customers that take a full dose of C3201. Similar to " +
                 "formula C7020 (see Marksman), Artillery is designed to guarantee a Blaster rating. However, as the name suggests, if G7020 is a rifle, C3201 is a mortar round. Like a mortar round, most C3201 subjects must take " +
@@ -573,124 +575,124 @@ public class Database2
                 "devastating, effect. Due to the lag time between shots, customers who plan on taking C3201 are recommended to attempt for a Mover or Brute power as well. Customers taking a full dose of C3201 should plan on " +
                 "working with at least one partner, although a full team may be best to protect them when they are vulnerable. Duos have been quite successful, though, and customers with the right combination should not be " +
                 "dissuaded. Examples of C3201 subjects: C3201-012 could pull all matter in a 25 ft. radius of her target point into a point, dealing crushing damage, C3201-079 fires slow-moving cubes approximately 10 ft. across " +
-                "that deliver a scorching attack upon contact.","common, safe, long-range, preparation, AoE"));
+                "that deliver a scorching attack upon contact.","common, long-range, preparation, AoE"));
         formulae.add(new Formula2("Tenacity","D1819",5,5,6,2,5,"Formula D1819 is one of the most varied among the D-series in terms of the powers it provides outside the role of " +
                 "a traditional Brute. All D1819 subjects have at least moderate Brute traits, but their powers also seem to have a scaling trait that seems to increase with duration of combat. The exact parameter it scales with " +
                 "can vary (examples include adrenaline, damage, or perceived threat level) but in general it can be assumed that they will get stronger the longer the fight goes on. This can be perfect for some, as they can " +
                 "slowly overwhelm their opponents as they wear them down, while others may find this to be a disadvantage. In around 1/4 of subjects, the power level will begin to wane if combat persists for too long. " +
                 "When mixed with other formulas, Tenacity seems to hold on to this scaling trait but most customers that mixed it did not receive any of its Brute traits. We are working to refine this, but it will take time.",
-                "safe, simple, defensive, self, durability, regeneration, shield, strength, grab-bag"));
-        formulae.add(new Formula2("Rebirth","D9644",8,7,5,2,5,"One of our newest D-series formulas, Rebirth creates Brutes that are different than the standard. Instead of opting " +
+                "simple, defensive, self, durability, regeneration, shield, strength, grab-bag"));
+        formulae.add(new Formula2("Rebirth","D9644",8,7,5,1,5,"One of our newest D-series formulas, Rebirth creates Brutes that are different than the standard. Instead of opting " +
                 "for increased durability, subjects that take D9644 develop a massively accelerated healing factor that allows them to heal most of the damage done to them in minutes, if not seconds. There is still commonly an " +
                 "increase in strength, although increased agility is also highly common. An interesting 'deviation' seen is an adaptive factor to the healing, with the subject's body adapting to reduce damage from attacks it " +
                 "is hit with in the future. Deviation is in quotes because while some customers desire it, many find the ghoulish and bizarre bodies they grow to be a problem. This is rare, however, and customers shouldn't " +
                 "worry as many of these adaptive regenerators lose the adaptions within hours of leaving combat. It should be noted that combining Rebirth with other formulas often has unintended results, so customers should " +
-                "keep it below 11% or above 69% of their formula for best results.","reliable, safe, regeneration, strength, agility"));
-        formulae.add(new Formula2("Aquae","W3139",5,8,4,1,4,"Subjects of W3139 have powers that revolve around a phyla of predatory, amphibious, serpentine creatures and their " +
+                "keep it below 11% or above 69% of their formula for best results.","reliable, regeneration, strength, agility"));
+        formulae.add(new Formula2("Aquae","W3139",5,8,4,2,4,"Subjects of W3139 have powers that revolve around a phyla of predatory, amphibious, serpentine creatures and their " +
                 "environment (a dark, blue-purple ocean). In the spirit of the W-series, many of the powers from Aquae are tricky to understand on first contact and require a fair amount of adjustment time. This can often " +
                 "mean that a customer can expect a temporary power spike when fighting new enemies, as the enemies will almost certainly be caught off-guard. An example of a Shaker/Changer created from W3139, subject W3139-208 " +
                 "created a shimmery perimeter that only appears to be a translucent veil. Upon entering however, the affected target's perception shifts and the entirety of the affected area becomes filled with a dark purple " +
                 "water. Inside the water W3139-208 became a large swimming serpent. W3139-144, on the other hand, was a Striker 4 that briefly teleported her target into the black ocean, often causing partial drowning and " +
-                "crushing damage from the pressure.","unique, safe, otherworldly, complex, short-range, organic, animal, elemental, water"));
+                "crushing damage from the pressure.","unique, otherworldly, complex, short-range, organic, animal, elemental, water"));
         formulae.add(new Formula2("Kinesis", "U4444",8,5,5,1,5,"Pyrokinesis, hydrokinesis, terrakinesis, etc. are all present in Kinesis subjects. Although aerokinesis is seen, " +
                 "customers desiring aerokinesis specifically should also examine the Vendaval formula which specializes in it. Generalized telekinesis is seen in around 13% of the time, but most subjects are restricted to " +
                 "one kind of material or energy. The power level of U4444 subjects varies wildly depending on whether they have sufficient material in their area. A Blaster 8 using pyrokinesis becomes a Blaster 0 if they " +
                 "have no source of fire to work with. Although a good portion of subjects are true kinetics, customers should know that many subjects only have a few moves that they can quickly and routinely use in combat. " +
                 "The originality and power levels of subjects also vary based on their material/energy manipulated and the maximum they can control at one time (both in sheer amount and number). Manipulating diamond would " +
                 "definitely score 10 for originality, but it would effectively have a power of 0 due to diamond's rarity in large quantities. On the other hand dirt is much less durable and more common, but a customer can " +
-                "realistically always expect to have dirt on hand. Unlike some other U-series formulas, line of sight to manipulated material/energy is usually required for Kinesis parahumans.","unique, safe, utility, " +
-                "versatile, environment, elemental, fire, water, ice, stone, metal, air, AoE, telekinesis"));
+                "realistically always expect to have dirt on hand. Unlike some other U-series formulas, line of sight to manipulated material/energy is usually required for Kinesis parahumans.","utility, " +
+                "versatile, environment, elemental, fire, water, ice, stone, sand, metal, air, AoE, telekinesis"));
         formulae.add(new Formula2("Weevil","M3061",7,7,4,2,5,"Arachnophobes and those squeamish around insects should avoid formula M3061 at all costs. Bugs, insects, arachnids, " +
                 "and anything that skitters through the shadows falls under the domain of Weevil. Movers, Changers, Masters, and Brutes make up the vast majority of M3061 subjects. Insectoid morphology from this planet and " +
                 "others made repeat appearances throughout testing (wings, chitin, mandibles, etc.). Mover ratings usually result from flight or greatly increased climbing ability and as such tend to remain on the lower end " +
                 "of the spectrum while Changers and Masters are usually among the strongest M3061 subjects. Because the general population is uneasy at seeing most M3061 capes in the field, villains tend to drift toward this " +
                 "formula more often than heroes, but this is not a hard rule. Subject M3061-313 projected a telekinetic chitinous armor and demonstrated increased strength and became a promising member of the Protectorate " +
-                "until their untimely death during a building collapse eight months into their career.","safe, organic, animal, flight, changer, master, strength"));
+                "until their untimely death during a building collapse eight months into their career.","organic, animal, flight, changer, master, strength"));
         formulae.add(new Formula2("Narcotic","Z0420",8,9,3,1,5,"Subjects of Z0420 almost always secrete some form of a pharmaceutical drug that affects at least humans, if not " +
                 "all animals or organisms. Most subjects produce 1-3 unique substances, although most that create more than that have at least a few that are non-reactive to other organisms. Around 30% of the drugs produced are " +
                 "psychoactive in nature, producing hallucinations or confusion in their victims the majority of the time. Unlike most other formulas, we recommend and encourage customers to mix Z0420 with other formulas to " +
                 "reach their full potential and help channel the creation of the power into a direction they want. Otherwise, the secondary powers of Z0420 may often eclipse the drug-related power(s). It is counter-intuitive, " +
-                "but mixing in another formula tends to bring out the core Z0420 powers and make it seem as though it is still a full Z0420 mixture.","reliable, unique, safe, formula modifier, creation, versatile, " +
+                "but mixing in another formula tends to bring out the core Z0420 powers and make it seem as though it is still a full Z0420 mixture.","reliable, unique, formula modifier, creation, versatile, " +
                 "others, organic"));
-        formulae.add(new Formula2("Oculus","N2349",9,8,4,1,6,"Being one of the few formulas that revolve around human anatomy, all powers in N2349, as the name Oculus suggests, " +
+        formulae.add(new Formula2("Oculus","N2349",9,8,4,3,6,"Being one of the few formulas that revolve around human anatomy, all powers in N2349, as the name Oculus suggests, " +
                 "involve eyes, eyesight, and/or eye contact. Many of the powers are incredibly devastating when unleashed, although once enemies are aware of the line-of-sight or eye contact restrictions, activating or " +
                 "landing them are much more difficult. Causing mind control or immolation on eye contact are both powers seen from Oculus and netted the customers PRT ratings of Master 8 and Blaster 7 respectively. Most " +
                 "common deviations still remain around the eyes, whether a glowing effect or a massive growth in size of the eyes. Around one quarter of deviations also involve sprouting multiple eyes on various parts of a subject's " +
                 "body, which becomes a great boon in combat as they can make eye contact and see in almost every direction. As for secondary powers, formula N2349 seems to correct most known vision problems including complete " +
-                "blindness and near/far-sightedness and can provide even mildly better vision than the average human.","reliable, unique, safe, long-range, sensory"));
+                "blindness and near/far-sightedness and can provide even mildly better vision than the average human.","reliable, unique, long-range, sensory"));
         formulae.add(new Formula2("Vision","O3269",8,7,5,1,6,"Images of the future are the common thread throughout O3269 formulas. Often times these only appear inside " +
                 "the subject's own head, but in around 28% of patients these visions are visible, at least in part, by others. The appearance of these visions was neigh unpredictable by our scientists, with subject O3269-022 " +
                 "actually being invisible and people only ever seeing him in flickering images of what he was going to do or had already done. The visions of formula O3269, like all precognition capes, must be taken with a " +
                 "grain of salt because even knowing about the future is liable to change it. Most subjects also have hard limitations on what their powers, either controlling the number of visions, the length of the visions, " +
                 "or how far into the future each vision takes place. We recommend that any individual that wishes to drink a 100% O3269 mixture signs up for our Cape Combat Survival course and Basic Firearm & Martial Art " +
                 "course prior to imbibing their mixture to increase their odds of a combat-ready power. The more combat training any one patient receives, the more effective their power seems to be in combat.",
-                "reliable, safe, mental, precognition, utility, preparation, versatile, sensory"));
+                "reliable, mental, precognition, utility, preparation, versatile, sensory"));
         formulae.add(new Formula2("Sandman","G2800",6,9,4,0,7,"G2800, as a formula, has a 100% chance to involve sleep and a 68% chance to involve memory loss (mostly retroactive). " +
                 "The memory loss is usually very minor compared to that caused by other mentally-oriented capes and usually only occurs if a target falls asleep under the affect of a G2800 subject. A Stranger rating is almost " +
                 "guaranteed from Sandman. Subject G2800-012 has an aura that slowly puts those in the area to asleep. Over a period of time, people begin to suddenly fall asleep and over time they do so at a faster rate. " +
                 "Reports from testers of this power state individuals become understandably distressed upon seeing others rapidly falling asleep, but if they too fall asleep they remember none of the events prior to coming " +
                 "under the effects of the aura. G2800-056, for contrast, could fall asleep at will and projected a body of a chosen person, indistinguishable from the target, even if she had only briefly glimpsed them once. " +
-                "Overall, G2800 aren't terribly applicable in combat, but are nearly unparalleled in espionage.","unique, safe, whimsical, utility, aura, others, mental, stealth, master"));
-        formulae.add(new Formula2("Neo","X1111",7,10,5,1,8,"Named after the movie series 'The Matrix', this formula often have subjects that play with parts of reality itself " +
+                "Overall, G2800 aren't terribly applicable in combat, but are nearly unparalleled in espionage.","unique, safe, whimsical, utility, aura, others, mental, stealth, master, sleep"));
+        formulae.add(new Formula2("Neo","X1111",7,10,5,2,8,"Named after the movie series 'The Matrix', this formula often have subjects that play with parts of reality itself " +
                 "as if it were putty. Walking up stairs no one else sees, walking through a door in Siam only to appear moments later in Russia, developing memories of things that never happened, all of these are seen in " +
                 "formula X1111. Our scientists' best guess as to how these powers are interlinked is that they are all some form of dimensional manipulation. The breakthrough came with subject X1111-401, a man with the " +
                 "ability to see the 'neighboring' dimensions as a series of phantom worlds that overlay this one. With physical contact and focus, he can pull objects from these realities into ours, or push from our " +
                 "version of the world to theirs. He was limited in that large objects other than humans were difficult to transfer and even after weeks of testing he could not transfer himself, thus limiting our reach " +
                 "into other 'realities' to the two he could see. He is now an invaluable addition to our staff, helping us to hide what needs to be hidden and dispose of things if they get in our way.",
-                "unique, safe, expensive, complex, versatile, exotic, dimensional"));
-        formulae.add(new Formula2("Colossus","H0133",8,6,4,1,5,"For those that don't mind, or even desire, becoming a career cape, H0133 is a great formula to make a splash " +
+                "unique, expensive, complex, versatile, exotic, dimensional"));
+        formulae.add(new Formula2("Colossus","H0133",8,6,4,3,5,"For those that don't mind, or even desire, becoming a career cape, H0133 is a great formula to make a splash " +
                 "in the cape scene. It is a changer power who's main theme is expansion and large size. Colossus subjects live up to their name, often towering 25 ft. or more on the battlefield. Around 31% of subjects " +
                 "develop a 'full' human transformation and appear similar to a normal human, just much larger. In an interesting twist, nearly 40% of these large humans do not look like the subject from which they spawn. " +
                 "Those subjects that do not fall into this 'full human transformation' category are most likely partial human transformations or non-human transformations. Partial transformations, the most common, involve " +
                 "the expansion of body parts or full transformations only very briefly, while still maintaining a humanoid form while non-human transformation are usually full transformations, but the form is inhuman. " +
-                "Examples of non-human transformations include H0133-013 and H0133-016 who grew into a bone-plated snake and a spike-covered bovine respectively.","reliable, safe, size, simple, changer, strength, " +
+                "Examples of non-human transformations include H0133-013 and H0133-016 who grew into a bone-plated snake and a spike-covered bovine respectively.","reliable, size, simple, changer, strength, " +
                 "durability"));
-        formulae.add(new Formula2("Explanation","S2375",8,8,2,0,7,"No subject lacked at least one power that was Trump/Thinker in nature and involved somehow analyzing, " +
+        formulae.add(new Formula2("Explanation","S2375",8,8,2,1,7,"No subject lacked at least one power that was Trump/Thinker in nature and involved somehow analyzing, " +
                 "detecting, or examining powers themselves. Though often overlooked, we have many documented accounts of these powers saving lives in the field and making life easier for capes back home. Quick analysis " +
                 "of an enemy power can help prepare a team for the enemy's plan of attack and help avoid making novice mistakes. Detecting powers early has also saved many a life and vastly helps against Stranger and " +
                 "subtle Master effects that often have no counter. On the more domestic side of things, you may have already met, or will meet, a cape who works for us named Oracle. She wears a toga and an ornate golden " +
                 "mask and is a S2375 success story. She claims to have the ability to tell the 'true purpose' of any given parahuman which can help us determine what the powers of a customer or subject is without much " +
                 "risk. She can only describe them in riddles, like the oracles of long ago, but our team has become adept at deciphering them since bringing a specialist on board. She has even helped us teach a Changer " +
                 "how to revert to human form when we initially believed he was just a deviant. To use a team's powers to the fullest or find every weak point in the enemy's, customers should choose formula S2375.",
-                "reliable, unique, safe, power-affecting, mental, sensory"));
-        formulae.add(new Formula2("MacGyver","Z9919",6,9,4,1,6,"Subjects from Z9919 run a fine line between Tinker and Thinker, building tools that serve only a temporary " +
+                "reliable, unique, power-affecting, mental, sensory"));
+        formulae.add(new Formula2("MacGyver","Z9919",6,9,4,2,6,"Subjects from Z9919 run a fine line between Tinker and Thinker, building tools that serve only a temporary " +
                 "purpose in most cases, but definitely building something. Specifically, they often combine or use objects in such a way that they don't exactly become a cohesive whole, but they do the job required. " +
-                "Think of them as someone who lacks functional fixedness altogether and can find the unique properties in anything. Subject Z9919-009 is a perfect example of this. During testing, he rewired a fridge and " +
+                "Think of them as someone who lacks functional fixedness altogether and can find the unique properties in anything. Subject Z9919-009 is a perfect example of this. During testing, he rewired a microwave and " +
                 "a jackhammer to create a freezer and successfully fought through three trained soldiers using only a banana and some string. Secondary powers are also quite common and combining Z9919 with other formulas " +
                 "almost guarantees they will grant the subject two distinct powers instead of fusing as is common with other formulas. These powers are greatly amplified if they to are object-oriented, but this needn't " +
-                "be the case.","unique, safe, formula modifier, tinker, mental, temporary, complex, versatile"));
-        formulae.add(new Formula2("Terraform","U7663",8,4,5,1,5,"The landscape seems to change around subjects that imbibe the formula U7663. This affect can be active or " +
+                "be the case.","unique, formula modifier, tinker, mental, temporary, complex, versatile"));
+        formulae.add(new Formula2("Terraform","U7663",8,4,5,2,5,"The landscape seems to change around subjects that imbibe the formula U7663. This affect can be active or " +
                 "passive, always on or easily controlled, have a range of 2 inches or 2 leagues, but it is always present. This aura or effect has a heavy tendency to affect the ground and terrain, but it is not unheard " +
                 "of for it to affect man-made structures and even the local wildlife from time to time. Even a handful of instances demonstrate the power affecting the clothing and possessions of individuals in an area. " +
                 "However, this power has never been demonstrated to affect other humans directly in any form. Examples of U7663 subjects are as follows: U7663-012 had an active power that caused a localized avalanche and " +
                 "a passive aura she could toggle on and off that slowly rose the earth around her to always give her the high ground. It appears this aura maxed out after growing a hill approximately 40 ft. tall over the " +
                 "course of a minute. U7663-101 had near-terrakinetic abilities that, among other things, passively pulled up slabs of stone to absorb incoming fire and an active ability that could draw magma from beneath " +
-                "the rocks in a slow gurgle.","reliable, safe, environment, aura, inorganic"));
-        formulae.add(new Formula2("Imagine","Z1998",5,5,6,1,6,"Daily meditation is key to maximize the power of formula Z1998. Subjects describe it as a feeling of open " +
+                "the rocks in a slow gurgle.","reliable, environment, aura, inorganic"));
+        formulae.add(new Formula2("Imagine","Z1998",5,5,6,0,6,"Daily meditation is key to maximize the power of formula Z1998. Subjects describe it as a feeling of open " +
                 "potential and after their meditations, lasting from several seconds to several hours, they feel as if that potential has been used. They focus on how they wish to improve and overtime their powers help " +
                 "them do just that. When taken alone, Imagine tends to give few extra powers and instead focuses on improving the subject's physical and/or mental attributes. In some subjects this appears as just overall " +
                 "improvement (higher IQ), while others it is much more specific (rapidly increased mathematical computation). When combined with other formulas, Z1998 often creates powers that are terribly underwhelming " +
                 "directly after the trigger event, but over time the Imagine improving effect turns them into some of the most powerful and personalized powers we have ever seen. Because of this, we encourage our customers " +
                 "to consider adding formula Z1998 to their mixture if they have room.","safe, formula modifier, temporary, preparation, self, mental, skills"));
-        formulae.add(new Formula2("Nightmare","V0000",8,10,8,2,9,"Targets killed by formula V0000 subjects are always found to be brain dead with no known biological cause. " +
+        formulae.add(new Formula2("Nightmare","V0000",8,10,8,4,7,"Targets killed by formula V0000 subjects are always found to be brain dead with no known biological cause. " +
                 "This, and the violent hallucinations that precede it, are the only offensive outcome of consuming a V0000 formula. The delivery method varies, but the effect remains the same. The most common delivery " +
                 "methods are touch, proximity, and gaseous miasma. Although visions and brain death are the only offensive powers, Brute powers of durability and/or regeneration have been noted. The V0000 without " +
                 "incredibly overt delivery systems make great assassins, with untrained doctors assuming their victims died from a stroke or aneurysm. Customers should be aware that the public does not very much favor " +
                 "capes who's powers can only be used to brutally murder others, and as such they will become a priority target of the PRT when and if their presence becomes known. Also, of the 300+ subjects we have " +
                 "tested, exactly 1 subject has a power the Thinkers contracted on our staff believes has a >90% chance to successfully become a Protectorate member, so customers who desire to be a hero should probably " +
-                "avoid V0000.","reliable, unique, powerful, safe, expensive, terrifying, lethal, mental"));
+                "avoid V0000.","reliable, unique, powerful, expensive, terrifying, lethal, mental"));
         formulae.add(new Formula2("Venom","V3178",6,4,5,2,4,"Incredibly potent toxins are the baseline for V3178 subjects. The potency is astounding, with nearly all toxins " +
                 "taking full effect in seconds. Of the toxins that don't immediately kill their targets, permanent bodily harm and/or complete paralysis are not uncommon. Spores, claws, fangs, needles, etc. are all " +
                 "secondary powers that help disperse or deliver the toxins to their victim(s). Minor regeneration is common, but other secondary powers are rare. These secondary powers always deal with biology and V3178 " +
                 "has not yet produce any capes with any powers that can effect inorganic material. This makes Venom incredibly effective against organic targets but nearly ineffective against targets that are mostly " +
                 "inorganic (such as some Brutes and many Tinkers. Only V3178 subjects that have control over the potency of their poison and venom will be able to be considered for roles in the PRT. Like other V-series " +
-                "formulas, Venom customers should be aware that if their lethal tendencies become known, they will become a priority target of the PRT.","common, safe, lethal, terrifying, organic, regeneration"));
+                "formulas, Venom customers should be aware that if their lethal tendencies become known, they will become a priority target of the PRT.","common, lethal, terrifying, organic, regeneration"));
         formulae.add(new Formula2("Follicle","M3438",8,7,3,1,5,"Hair, nails, and on rare occasions teeth are the primary tools of M3438. Hardening far beyond normal bounds " +
                 "is a common occurrence, and often the first powers customers will associate with formula M3438, but saying that is the only outcome would be a blatant falsehood. Powers similar to the hardened nails and " +
                 "teeth include subject M3438-108 who could replace his fingernails with glowing facsimile that could sear through most any material. The current working theory put forth by our scientists is that he keeps " +
                 "hydrogen and helium atoms in a state of fusion and fission to constantly generate the massive energy output. Manipulation of hair and nails is also seen, both in the more traditional 'Medusa-like' and " +
                 "more... exotic. An example of this phenomenon is M3438-124 who had a passive aura that grew out people's hair and gave her a sort of telekinetic control over it. She only needed proximity to work, not " +
-                "line of sight, and therefore distance or a complete head-to-toe body wax were the only effective defenses against her in combat.","reliable, safe, organic, self, short-range, mid-range"));
+                "line of sight, and therefore distance or a complete head-to-toe body wax were the only effective defenses against her in combat.","reliable, organic, self, short-range, mid-range"));
         formulae.add(new Formula2("Polyform","H1605",8,7,5,1,6,"Every Breaker subject produced by Polyform had two or more forms (not including a default human state if " +
                 "present), each with their own unique set of powers. These forms tended to be on the extreme ends, with Movers that could only move in a straight line or Blasters that couldn't move at all. A truly " +
                 "versatile powerset, understanding when to adopt each form appears to be the key between an average Polyform subject and an exemplary subject. A few subjects did not receive Breaker ratings as a main " +
@@ -698,14 +700,14 @@ public class Database2
                 "that could shift into a solar charger for the suit and a cellphone that could be detonated as a hand grenade. Instead of making a completely integrated powerset, it seems that formula H1605 prefers to " +
                 "give more potent and vulnerable forms to the subject and let them figure it out for themselves. In short, H1605 = multiple forms. Interactions with other formulas have intrigued our scientists, but no " +
                 "pattern has yet emerged. We are so eager to study this phenomenon that customers who combine H1605 with only one other formula are liable for a price cut on their final mixture! Talk to our staff if " +
-                "you are interested.","reliable, safe, changer, multitude, complex, versatile"));
+                "you are interested.","reliable, changer, multitude, complex, versatile"));
         formulae.add(new Formula2("Limitless","S9020",8,10,5,1,8,"This formula is perfect for any customer who cannot decide on what type of powers they want. The average " +
                 "S9020 cape has a series of 'spaces' they can fill with powers in a variety of ways. Some 'download' powers from other parahumans in close proximity over time while other S9020 subjects seemingly manifest " +
                 "powers at will. Most Limitless capes fall into one of two categories, although there are many notable exceptions. Category one powers allow the subject a large amount of control over what kind of power " +
                 "shows up but are slower to appear, weaker, or clunkier than category two. Category two, on the other hand, displays a higher degree of unpredictability but represents powers that are immediately usable " +
                 "at full power. Category two powers also seem to reward unpredictability, with our more clever subjects that use powers in surprising ways being 'rewarded' with more powerful abilities. The reverse is " +
                 "true, though, where subjects that repeatedly use powers in the same way find themselves with progressively weaker powers. In conclusion, Limitless is the formula for customers who want to experience all " +
-                "types of powers, but never hold them for too long.","self, safe, unique, safe, expensive, versatile, temporary, power-affecting"));
+                "types of powers, but never hold them for too long.","self, unique, expensive, versatile, temporary, power-affecting"));
         formulae.add(new Formula2("Static","S4342",7,5,2,0,5,"Disruption is the name of the game for S4342 parahumans, and they play the game well. Many powers affected by " +
                 "S4342 capes become very unpredictable, even to the owners of the affected powers. Some powers begin firing off randomly, some powers lose and gain range, magnitude, control, etc. for seemingly no reason " +
                 "at all, some powers even stopping to work entirely. Although these can be potent effects, they often throw the battle into chaos that even the Static cape's team cannot predict. However, Static powers " +
@@ -718,7 +720,7 @@ public class Database2
                 "receives a power that only grants powers to others. Granting powers to oneself is a little more nuanced, with subjects somewhat choosing from a fixed set of powers or randomly having one 'chosen' by the " +
                 "power itself. For customers interested in this second kind of parahuman ability (gifting oneself with powers) we recommend you examine formula Z9020 (named Limitless) as it provides a very interesting " +
                 "version of this with great regularity. Most S1010 parahumans(94%) that gift powers to themselves still retain the ability to give these powers to others in some capacity, although usually one suite of " +
-                "powers (personal or for others) is markedly more powerful, although exceptions has appeared...","safe, versatile, temporary, others, power-affecting"));
+                "powers (personal or for others) is markedly more powerful, although exceptions has appeared...","versatile, temporary, others, power-affecting"));
         formulae.add(new Formula2("Pristine","Y5143",9,7,0,0,5,"Formula Y5143 slowly improves the appearance of the subject over time. These changes would be ranked as a " +
                 "Changer 0, meaning they are actual, physical changes and not tricks of the mind. These changes can include removal of acne and acne scars, improving bone structure, regrowth of hair, etc. The personal " +
                 "feelings of subjects tend to be the driving factor that determines what classifies as 'attractive'.","reliable, safe, recreational, self, preparation, permanent"));
@@ -732,51 +734,51 @@ public class Database2
                 "other energy attacks in that it is hard to pin down the exact direction they are coming from. If a J7169 subject can remain hidden, they can often whittle down their opponents without having to enter open conflict. " +
                 "Piercing or slashing damage also commonly augments powers more inclined to direct combat, but quickly become very rare among those powers that have much higher versatility or variety. For customers that are " +
                 "considering multiple formulas: you should be aware that although Harpy provides a massive variety of powers, it does not combine well with other formulas and will markedly increase the chances of deviation if " +
-                "mixed.","safe, elemental, sound, master, long-range, stealth"));
+                "mixed.","elemental, sound, master, long-range, stealth"));
         formulae.add(new Formula2("Elevate","N2019",8,2,4,1,5,"Heightened hearing, sight, touch, taste, and/or any of the various senses humans have is what formula N2019 provides. " +
                 "This effect can appear as multiple small bonuses across many senses to one major increase to senses that only appear under specific conditions or that only sense certain things. A prime example of this third " +
                 "kind is subject N2019-510, a female child who could hear all the actions, speech, and movement of any and all parahumans within one mile of her. She did not need to know beforehand that they were a parahuman, " +
                 "that small Trump-type feature seemed to be covered by her power. Other examples include a subject (N2019-043) with a faster reaction time only when directly threatened by incoming projectiles. Catching baseballs, " +
                 "falling stones, etc. did not 'count' as threatening and therefore their power did not provide them with the boost to reaction time. Overall, Elevate is a stable and very useful powerset that is a good formula " +
                 "to mix with others to add more versatility to a power loadout.","reliable, common, safe, sensory, simple, utility"));
-        formulae.add(new Formula2("Muffle","G6671",5,5,5,1,5,"Targets of powers manifested from formula G6671 always have their senses lowered or nullified. A rare few even lose " +
+        formulae.add(new Formula2("Muffle","G6671",5,5,5,2,5,"Targets of powers manifested from formula G6671 always have their senses lowered or nullified. A rare few even lose " +
                 "the sense for days at a time, or lose it permanently. Sight and hearing are the most likely to be affected (muffling taste isn't very applicable), but interesting quirks of powers sometimes affect lesser senses " +
                 "like taste. Subject G6671-002 had an aura that blinded all people within 20 ft. but it also made any food taste like strawberries to the affected individuals for 10 minutes afterward. Some of the powers only " +
                 "affect others' senses in relationship to the power's user. This can even extend to actions that the subject takes: Subject G6671-109 always silenced any actions they took, even tossing silverware down a flight " +
                 "of stairs without anyone on the floors above or below hearing anything. This affect seemed limited to their direct actions only, if they rolled a bowling ball into another bowling ball, the first impact would " +
                 "be silent, but the second bowling ball colliding with a set of pins would be heard as normal. This led to Subject G6671-109 preferring to use knives at night to maximize their effectiveness without risking the " +
-                "sound of bullets flying through the air and ricocheting.", "safe, stealth, mental, sensory, mental, utility, versatile, aura"));
+                "sound of bullets flying through the air and ricocheting.", "stealth, mental, sensory, mental, utility, versatile, aura"));
         formulae.add(new Formula2("Eidetic","P5050",9,2,4,1,5,"Formula P5050 will always improve a subject's memory and recall abilities. The outcome and practical usage of these " +
                 "improvements varies, and customers often do not realize that Eidetic parahumans can become quite powerful. Some P5050 subjects keep with the expected Thinker vein, subject P5050-051 could memorize a person and " +
                 "their body language within seconds, easily seeing through our best attempts to disguise volunteers or coach them to lie. P5050-051 could even tell when volunteers weren't exactly sure if the information that had " +
                 "been given was 100% accurate. Other Eidetic capes, however, have more versatile applications, filling a Tinker, Striker, or nearly any of the other classifications, sans Master and Breaker. Subject P5050-100 is " +
                 "a master of over 20 martial arts as her body has perfect muscle memory, she need only complete a movement once and she can flawlessly repeat it instinctively. This has led to her having an approximate rating of " +
-                "Striker 4, Mover 2, Stranger 1 and allowing her to succeed as a 'non-powered' spy for the American government.","reliable, common, safe, mental, processing, simple, utility"));
+                "Striker 4, Mover 2, Stranger 1 and allowing her to succeed as a 'non-powered' spy for the American government.","reliable, common, mental, processing, simple, utility"));
         formulae.add(new Formula2("Amphibion","Y3312",10,8,1,0,4,"This formula gives subjects the ability to breathe underwater and/or hold their breath for hours on end. Our staff " +
                 "have rigorously tested and refined this formula so that less than 0.02% of the final test subjects showed any sort of outward physical change. Internal structures such as air sacs, more alveoli, etc., however, " +
                 "are quite common and customers should be aware that having medical examinations may become complicated if they desire to retain a non-powered guise. Obviously, formula Y3312 is best for customers living on a " +
                 "large, relatively private, body water or with access to such a place. Actively swimming without at least the appearance of a SCUBA in deep water or for long periods of time is sure to draw attention.",
                 "reliable, unique, safe, self, water, simple, permanent, water"));
-        formulae.add(new Formula2("Lilliput","W4067",8,5,4,1,5,"Seeing the world grow around you is said to bring about images of the Nisse, Gulliver's Travels, Alice in Wonderland, " +
+        formulae.add(new Formula2("Lilliput","W4067",8,5,4,3,5,"Seeing the world grow around you is said to bring about images of the Nisse, Gulliver's Travels, Alice in Wonderland, " +
                 "or any number of fairy tales. Like those stories, subjects of formula W4067 shrunk, becoming only a fraction of the size of a normal human. Some subjects had this as seemingly their only ability, while others had " +
                 "a vast array of abilities. The most interesting version of this is a Tinker (subject W4067-606) who could only shrink while absorbed in his work. He barely noticed the effect and often didn't even realize it had " +
                 "taken place as he ran in and around his machines, connecting and wiring the hardware. Another key point of the power is conservation of mass and momentum: some subjects have it, most do not. Subjects that have it " +
                 "tend to be lacking on other strong powers, though not to their disadvantage. Subject W4067 had a minor durability power that he used to become a living bullet, dashing at a target and shrinking for only enough " +
-                "time to slice through the target's body.","reliable, safe, whimsical, versatile, stealth, self, size"));
+                "time to slice through the target's body.","reliable, whimsical, versatile, stealth, self, size"));
         formulae.add(new Formula2("Siren","K8088",7,7,4,1,5,"Customers who are singers (or who wish to be) should seriously consider formula K8088. If the name 'Siren' wasn't enough " +
                 "of a tip-off, formula K8088 creates powersets centered around the subject's voice. Siren powers that affect organisms must be able to be heard while powers that affected inorganic matter must just be hit with the " +
                 "sound waves. Some formula K8088 subjects use subsonic or supersonic sound waves that can't always be heard, but the same requirements still apply. The most effective defense against an K8088 parahuman is " +
                 "soundproofing, distance, or incapacitating the subject's ability to talk/sing. The capes from K8088 do, though, have a distinct, rarely considered, advantage to their vocal powers. Because their sound wave's needn't " +
                 "be aimed, many Siren subjects can affect targets around corners, behind cover, or even entirely undetectable to their senses. This can throw off even the most seasoned strategists and give their team a concrete " +
-                "advantage. Siren often combines in interesting ways with other powers, sometimes even losing a vocal component entirely.","safe, long-range, AoE, sound, organic, inorganic, formula modifier"));
-        formulae.add(new Formula2("Eleventh Hour","X1515",8,7,5,1,6,"Eleventh Hour capes are very much like parahumans from the W-series formula Dilation; they manipulate time. The " +
+                "advantage. Siren often combines in interesting ways with other powers, sometimes even losing a vocal component entirely.",", long-range, AoE, sound, organic, inorganic, formula modifier"));
+        formulae.add(new Formula2("Eleventh Hour","X1515",8,7,5,2,6,"Eleventh Hour capes are very much like parahumans from the X-series formula Dilation; they manipulate time. The " +
                 "only difference is that while Dilation capes can have offensive, defensive, or utility powers, Eleventh Hour capes rarely, if ever, develop offensive abilities. Like time powers are often predicted to be, Eleventh " +
                 "Hour capes have a plethora of bizarre, hard to comprehend powers that require much time and practice to utilize well. Some formula X1515 customers and subjects have developed there skills in such a way that they " +
                 "have even found offensive uses for their powers, often increasing their threat rating drastically. This offensive adaption is rarely accomplished solo, and usually requires at least one other parahuman's cooperation " +
                 "to work. For example, a subject from another testing batch had a self-destructing power and subject X1515-236 could 'reset' a person to their status from seconds ago. Instead of the exploder taking minutes to " +
                 "regenerate, she was able to continually detonate, moving her and subject X1515-236 from a Blaster 5 and a Brute 2 to a Blaster 8 and a Brute 5 respectively (when paired together). Other Eleventh Hour powers involve " +
-                "slowing down attacks, increasing an ally's dodging speed, or creating fields of unequal time to 'curve' projectiles.","reliable, safe, exotic, time, defensive, utility, complex, versatile"));
-        formulae.add(new Formula2("Ursine","B3847",7,5,5,2,5,"Bears. Need we say more?","safe, theme, simple, animal, versatile, short-range, force field, changer"));
+                "slowing down attacks, increasing an ally's dodging speed, or creating fields of unequal time to 'curve' projectiles.","reliable, exotic, time, defensive, utility, complex, versatile"));
+        formulae.add(new Formula2("Ursine","B3847",7,5,5,2,5,"Bears. Need we say more?","theme, simple, animal, versatile, short-range, force field, changer"));
         formulae.add(new Formula2("Titan","L7192",6,3,8,9,6,"Powers of the elements abound among Titan subjects. Unfortunately, severe deviations accompany nearly every dose of " +
                 "formula L7192. Named after the Titans of Greek mythology, formula L7192 has demonstrated the ability to grant powers revolving around all of the basic elements (fire, earth, water, air) as well as plant material " +
                 "and rarer natural phenomena (gravity, space, time, etc.) around 10% of the time. Serious deviations vary, but include an increase in size, lack of control, and grotesque transformations of the subject's body " +
@@ -790,33 +792,33 @@ public class Database2
                 "Serpentine subjects. The name for formula V0009 does seem fitting as most formula V0009 subjects do resemble snakes or lizards in behavioral mannerisms. The similarities are close enough that many people with " +
                 "ophidiophobia (fear of snakes) are at least mildly disturbed by the presence of an actively powered V0009 cape. This uncanny resemblance, when paired with the near-universal negative reaction to serpents, is why " +
                 "Serpentine was put into the V-series. Although formula V0009 will fit well on a V-series-based parahuman team, they are subtle enough that, with the right theming, they can fit into a normal team as well. The " +
-                "same cannot be said for other V-series formulas like Cadaver or Sanguine.","reliable, unique, safe, animal, terrifying, short-range, agility, regeneration"));
+                "same cannot be said for other V-series formulas like Cadaver or Sanguine.","reliable, unique, animal, terrifying, short-range, agility, regeneration"));
         formulae.add(new Formula2("Excalibur","R1111",8,5,4,0,5,"A single item or small set of items is always the focus of a R1111 parahuman. Over time they form a 'bond' with a " +
                 "single item and their powers while wielding/wearing/using the item increase with the bond. The powers and items used cannot be predicted well, some subjects have only specific kinds of items to use (subject " +
                 "R1111-032 could only use swords) while others can use nearly any kind. The bond sometimes grows over the course of a moment and is lost as soon as the item is dropped while other times it sticks around until " +
                 "the item is destroyed. Because the items used cannot be predicted, it is best for customers to hold off on theming their parahuman identity until after triggering and testing their powers. This formula works well " +
                 "when combined with others and works for solo or team-oriented customers. An all around solid choice.","reliable, safe, object-oriented, formula modifier, singular, preparation, versatile"));
-        formulae.add(new Formula2("Bestow","R8740",8,6,4,1,6,"As the name suggests, Bestow subjects grant abilities to objects. These abilities are immediate and full-power upon " +
+        formulae.add(new Formula2("Bestow","R8740",8,6,4,0,6,"As the name suggests, Bestow subjects grant abilities to objects. These abilities are immediate and full-power upon " +
                 "manifestation, requiring no charge-up time. Most formula R8740 subjects have a limited pool of abilities they can bestow onto items, those with a strong secondary powerset may only even have one, but the number " +
                 "of available powers tends to grow over time. Subject R8740-068 described it as a grid of various powers, while R8740-002 said she saw various spirits that inhabited her targets. The range of this gift-giving " +
                 "power changes from subject to subject, but touch is the most common and no range further than 100 ft. has been seen. Duration of these effects cannot be predicted, and even among powers given by a single " +
                 "subject, it can vary wildly. This formula is the best in the R-series for spontaneous customers without being a terrible formula for those that wish to plan ahead either.","reliable, safe, object-oriented, " +
                 "power-affecting, utility, versatile, short-range, mid-range, temporary"));
-        formulae.add(new Formula2("Wraith","G1234", 7,7,5,1,6,"Intangibility, in some form, is the hallmark of formula G1234. Although not always applying it to themselves, intangibility is often a bizarre power " +
+        formulae.add(new Formula2("Wraith","G1234", 7,7,5,2,6,"Intangibility, in some form, is the hallmark of formula G1234. Although not always applying it to themselves, intangibility is often a bizarre power " +
                 "when Wraith subjects bring it onto the battlefield. Unlike other forms of damage reduction, seeing objects pass through another individual has often been described as deeply unsettling. In more covert operations, " +
                 "G1234 subjects can often phase through most types of defenses, almost always requiring a Trump cape to be present to insure any compound was safe from them. Attacks from offensively oriented Wraith parahumans are " +
                 "also quite deadly, flying through armor only to materialize inside the target's body. The exact method of this ability is not known, although some scientists on our staff hypothesize the subjects are 'smearing' " +
                 "themselves across several dimensions as they are rarely entirely immune to things happening in our world. Supporting evidence of this theory: strong deviants often react to things that aren't there, including holding " +
-                "conversations with no one and walking up stairs that no one else can see or touch.","safe, stealth, movement, exotic, utility, versatile"));
-        formulae.add(new Formula2("BASE: TRANSFORMATION", "Z0000",10,1,1,1,5,"The basic transformation formula, when mixed with another formula, nearly always(98%) grants a Changer or Breaker power. This " +
+                "conversations with no one and walking up stairs that no one else can see or touch.","stealth, movement, exotic, utility, versatile"));
+        formulae.add(new Formula2("BASE: TRANSFORMATION", "Z0010",10,1,1,3,5,"The basic transformation formula, when mixed with another formula, nearly always(98%) grants a Changer or Breaker power. This " +
                 "formula becomes highly volatile (Deviation: 10) if taken alone but strangely does not affect deviation chance if mixed. 15% of a customer's mixture should be BASE CHANGER, if desired; more increases likelihood " +
-                "of deviation and less decreases chances of a transformation power.","reliable, common, safe, changer, formula modifier"));
+                "of deviation and less decreases chances of a transformation power.","reliable, common, changer, formula modifier"));
         formulae.add(new Formula2("RELEASE RESTRAINT","Z9080",10,10,10,8,8,"Formula Z9080 should always be paired with at least one other formula and we highly recommend Balance " +
                 "being included in any formula involving Release Restraint. The entire purpose of RELEASE RESTRAINT is to help powers manifest without a Manton limit. These powers are often the most lethal of all formulas, " +
                 "allowing one-hit kills of most capes, including many Brutes. The best defense for non-Manton-limited capes are avoidance or elimination. Customers should be warned, however, that formula V9080 does have a relatively " +
                 "high deviation rate and with mixing this will increase further. Around 25% of subjects deviated, even when combining in the Balance formula.","reliable, unique, powerful, deviant, expensive, lethal, formula " +
                 "modifier"));
-        formulae.add(new Formula2("Pocket","X8088",5,8,5,1,6,"Dimensional manipulations, especially those dealing with pocket dimensions, is the defining feature of X8088. The " +
+        formulae.add(new Formula2("Pocket","X8088",5,8,5,0,6,"Dimensional manipulations, especially those dealing with pocket dimensions, is the defining feature of X8088. The " +
                 "possibilities are too numerous to list here, but the functionality of any given powerset varies based on the number of dimensional 'doors' a subject can open and to where these doors open. Subject X8088-501 " +
                 "could open only one portal, but it opened into a high-pressure aquatic environment. She used this to blast enemies with jets of water. This jet had enough force to push a car along a parking lot, albeit slowly. " +
                 "Subject X8088-212, on the other hand, had a reactionary that summoned twin dimensional holes to send potentially dangerous objects from one side of the subject to the other. Organic targets would be teleported " +
@@ -825,15 +827,131 @@ public class Database2
                 "no power has any single effect that lasts more than 6 seconds. In most cases, these powers work best when paired with a striking martial art although some outliers do exist. Patient B1919-044 sent objects rocketing " +
                 "off whichever direction he was facing. His projectiles reached speeds of 180+ km/h and flew for four seconds or until they impacted another object. Patient 044, interestingly enough, could move objects up to the " +
                 "size of a car but couldn't affect a second object while the first one was still moving. Customers shouldn't be worried about wounding themselves with their power, throughout 113 treatments of Robin, it has never " +
-                "occurred.", "reliable, safe, short-range, kinetic, fire, versatile"));
-
+                "occurred.", "reliable, short-range, kinetic, fire, versatile"));
+        formulae.add(new Formula2("Slumberer", "K8078",5,8,4,2,6,"All powers from formula K8078 activate if and only if the subject falls asleep. Of powers that provide 'consciousness' " +
+                "during sleep, Shakers, Masters, and Thinkers are the most common and powers that take affect during and after sleep tend to fall into the Brute, Mover, or Tinker. Most Slumberer parahumans have a very minor power " +
+                "that allows some form of 'power-napping' or the ability to fall asleep instantly. Most K8078 subjects developed a single, strong power and subjects with a suite of lesser powers, even tightly related powers, are " +
+                "quite rare. Optimizing Slumberer depends on the exact nature of the power. For those who gain powers for a duration after sleep, it's best to have sensory-type partners so that customers can immediately engage the " +
+                "opposition after waking. For those that must remain asleep during combat, it is better to partner with others who can help protect the customer's sleeping form.","unique, sleep, self"));
+        formulae.add(new Formula2("Sanction", "E8888",6,4,5,2,5,"Master, Shaker, and Stranger classifications are the nearly exclusive result of imbibing formula E8888, named Sanction. " +
+                "Every subject showed the ability, in one way or another, to set 'sanctions' against others. These mental compulsions can manifest as needing permission to do something, or not being able to do something regardless " +
+                "of desire or intent. Some of these are obvious when they are in place, requiring eye contact with the E8888 parahuman to impose, and can be powerful enough to force others kill, rape, or even stop breathing through " +
+                "sheer force of will. Others are much subtler. Subject E8888-020 is a good example of this, causing a volunteer to 'forget' to pick up their keys thirteen times before they noticed they were having difficulty.",
+                "mental, others, utility, master, stealth"));
+        formulae.add(new Formula2("Pharaoh","U3150",4,8,5,2,5,"Terrakinesis and sunakinesis (sand control) are involved in every subject from Pharaoh (formula U3150). Principally, most " +
+                "subjects could control one large mass or many low-mid sized chunks. These chunks often took the shape of humanoids and some even showed limited autonomy. These minions were often limited in durability, but could " +
+                "be reformed with ease. This theme of Shaker/Master type powers remained consistent throughout our testing of Pharaoh with remarkable consistency. Subject U3150-028 could excrete a cloud of sand that 'infected' those " +
+                "that wandered into it, encrusting their eyes with sand and allowing U3150-028 to compel them, although they could sometimes resist.","unique, elemental, sand, stone, AoE, master, versatile"));
+        formulae.add(new Formula2("Azazel", "V0666",2,9,8,8,7,"Nearly all subjects from formula L0666 had a serious deviation that, although in and of itself often useful, makes the " +
+                "subject appear demonic. Leathery wings for flight, black scales for durability, and large antlers have all been seen, along with countless others. Along with these large deviations, every subject gained another strong " +
+                "power. One subject could 'vomit' a powerful laser from their mouth while another subject could cover everything within 60 ft. in a jet-black sheen of acid that quickly dissolved all biological material. Unlike other V-series " +
+                "formulas, Azazel has quite a high rate of deviation and thus V0666 subjects will always be terrifying. This may be good for some customers, but we understand that many individuals may want to have civilian lives.",
+                "terrifying, unique, powerful, deviant, variable, permanent"));
+        formulae.add(new Formula2("Bloodhound","N4323",8,5,3,1,4,"Formula N4323 subjects always develop powers around locating people, places, or things, although with a surprisingly " +
+                "broad array of possible classifications. ALong with the typical Thinker, Stranger, and Tinker powers one would expect from a 'finding' formula, N4323 has also produced a number of capes from the other classifications, " +
+                "excluding Changer. These range from Strikers that see weak points as colored dots to Movers who are seemingly lucky enough to always find the quickest path through an environment. As far as planning goes, customers " +
+                "considering N4323 should note that most of the displayed powers work best in 'discrete' operations and fall into a support role for any combat situation. These powers often are also quite useful in civilian life and " +
+                "we have had several customers take this formula and never become an active cape.","reliable, recreational, utility, sensory, mental"));
+        formulae.add(new Formula2("Darwin", "I2891",5,3,4,2,3,"As the name suggests, survival and evolution are the keys to this formula, although not always in the traditional, biological " +
+                "sense. A large percentage of the subjects do have biological powers in the vein many would expect, but many others have an adaptive danger sense. The danger sense of subject I2891-009 improved exponentially for each " +
+                "attack they evaded from a given attacker. By the fourth attack, I2891-009 saw them coming a full two seconds in advance. Their one drawback is that the danger sense resets if any other attacker attempts to injure the " +
+                "subject, making I2891-009 exceptional only in 1v1 fights.","common, versatile, defensive, utility, self, organic, mental, sensory"));
+        formulae.add(new Formula2("Legion","T2171",8,2,5,3,5,"The minimum number of minions ever created or controlled by a formula T2171 patient was five. Many subjects created many more " +
+                "minions. Each minion was weaker or less versatile than the average minions of other Masters, but what they lack in quality they make up for in quantity. Several subjects have even been seen to make minions in the hundreds, " +
+                "though most Legion subjects have minions with a time-limit component. ALl minions created from 100% Legion subjects were humanoid in design, and 62% of these were identical to the subject themselves, creating swarms of " +
+                "identical people.","reliable, common, utility, master, temporary, versatile, multitude"));
+        formulae.add(new Formula2("Multi-tool","S1893",2,6,5,1,5,"Formula S1893 is the Swiss army knife of formulas, with subjects exhibiting a minimum of four distinct powers, with some " +
+                "exhibiting as many as nine. Each power seemed to have a set of restrictions in place, however, either being weaker or having a limited use before it had to go on a cooldown of sorts. This resulted in S1893 capes being " +
+                "quite versatile, but requiring a large amount of strategy and improvisation. Most deviations were the result of one or more of these powers remaining in an 'always on' state. This formula is placed in the S series because " +
+                "of an interesting phenomena in which around 65% of Multi-tool subjects experienced one or more of their powers changing (either partially or entirely) if it wasn't used enough.","power-affecting, variable, " +
+                "versatile, multitude"));
+        formulae.add(new Formula2("Womb","Q2426",8,9,6,2,8,"The inventions of formula Q2426 parahumans involve growth and regrowth of various parts. This can be during combat or in the " +
+                "interim, only specific parts or the entire machine. Many of these inventions are powerful and somewhat adaptable, but require high initial or upkeep costs. Biological and/or mechanical suits are common, as are the " +
+                "creation of large animals grown on custom-grown enzymes and exotic materials. More traditional armaments, such as weapons and grenades, are much less common than in other formulas, though they have been seen.",
+                "tinker, reliable, unique, expensive, preparation, organic, technology"));
+        formulae.add(new Formula2("Blush","E2730",8,3,5,1,6,"Formula E2730 revolves around emotional manipulation, often in the form of projection of the user's feelings or the amplification " +
+                "of the emotions already present in the target. Other factors such as range, number of simultaneous targets, delivery method, etc. cannot be easily predicted, although there seems to be a correlation between the emotional " +
+                "state of the patient and several of these factors. For customers looking for a debilitating offensive power from E2730, we recommend our Tailored Trigger Event package to maximize the chance of the desired outcome. In " +
+                "this case, the event will be designed to elicit feelings of anger directed toward a specific individual or individuals in order to increase the odds of a directly offensive power.","mental, others, emotions, versatile, " +
+                "master, short-range, mid-range, long-range"));
+        formulae.add(new Formula2("Paperweight","X3436",6,8,7,1,7,"Gravitational manipulations are the common thread among all formula X3436 customers. All standard PRT classifications have been " +
+                "demonstrated from Paperweight parahumans, with an emphasis on Shakers and Blasters. Although many X3436 powers focused on increasing or manipulating the direction of gravity, almost 20% of patients exhibited the ability to " +
+                "partially or totally reverse the effects of gravity. Subject X3436-300 could send objects he touched 'falling' upward for 2-6 seconds before his power wore off and they fell back to Earth. If he remained in contact with them, " +
+                "he could refresh it indefinitely to 'fly' though it required him to affect an object that weighed at least as much as himself.","exotic, gravity, unique, versatile, short-range, mid-range, AoE"));
+        formulae.add(new Formula2("Cog","P3739",5,5,4,2,4,"For those customers looking to see the 'bigger picture', formula P3739 is for you. The relationships and inter-workings between " +
+                "two or more things are the driving theme of formula P3739. Thinkers (and minor Thinker powers) are very common, along with Shakers, Strikers, and Trumps. That being said, all classifications, except Master and Blasters, " +
+                "show up regularly. Subject P3739-T2171-011 (a mix of Cog and Legion, a master power) could create copies of herself and 'shuttle' strength and speed between them, making a considerably fast clone if all others stopped moving " +
+                "entirely. Subject P3739-025 possessed a Thinker power to detect who has interacted with an object or person in the last hour and detect their location.","mental, complex, versatile, multitude, solution"));
+        formulae.add(new Formula2("Gordian Knot","P1743",9,8,6,2,7,"Like the ancient legend, formula P1743 (named Gordian Knot) involves the solving of complex problems in a simple and efficient " +
+                "way. Most P1743 patients set a defined goal and exhibited the ability to intuitively understand the steps necessary to accomplish this goal in the least amount of time. Some subjects showed powerful variants that had a " +
+                "limited number of uses per day, while others needed to keep their goals small but could use it often. Some even exhibited this power seemingly subconsciously, happening to accomplish their goals with ease. Customers should " +
+                "know that formula P1743 has had strange interactions when mixed with other formulas that our scientists do not yet fully understand. We are working to understand this phenomenon, but until such time as we understand the trends, " +
+                "mixing Gordian Knot with other formulas cannot be well predicted.","mental, reliable, unique, simple, versatile, utility, self, singular, solution"));
+        formulae.add(new Formula2("Paradise","E5355",6,8,5,1,6,"Although most people imagine negative emotions when picturing mental offensive powers, Paradise subjects turn this expectation on " +
+                "its head by causing almost exclusively positive emotions. These can range from general feelings to complete hallucinations, but less than 1% of formula E5355 patients cause any negative emotion at all. Often, these powers have a " +
+                "secondary effect such as regeneration, lethargy, etc. More exotic secondary effects, like increased flammability, are also common. Customers should be aware that those affected by Paradise powers tend to exhibit behaviors indicative " +
+                "of addiction. This addictive property can be anywhere from non-existent to potent enough to cause a Master classification from the PRT. However, it should be noted that all people affected Paradise powers will return to normal " +
+                "if kept isolated for a week.","mental, others, unique, utility, temporary, emotions, master, short-range, mid-range, long-range"));
+        formulae.add(new Formula2("Protege","Y8991",9,6,2,0,5,"Gifting skill in one or more areas is the realm in which formula Y8991 operates. Although Protege powers have been observed to grant " +
+                "proficiency instantly, the standard Y8991 patient has an aura or contact power that gifts skills over time. This formula would be perfect for those that desired to have an apprentice in a trade craft, however customers should keep " +
+                "in mind that our scientists cannot control the exact skill set of the power or the skills that it grants. Customers should also keep in mind that this formula is designed for a recreational use and those looking to become an " +
+                "active parahuman based around skills should seriously consider Savant (formula P4872) instead.","recreational, reliable, safe, simple, utility, permanent, preparation, mental, skills, aura"));
+        formulae.add(new Formula2("Neon","X8486",6,9,5,3,7,"Formula X8486 subjects convert light into other forms of energy. Noctus capes (those that needn't eat or sleep) showed up in Neon more often than " +
+                "from other formulas. The most often conversion was from light to kinetic energy and kinetic energy to light. Subject X8486-100 was rated a Blaster 8 who charged up from ambient light. Their blasts were nearly impossible to " +
+                "avoid as they traveled at the speed of light and converted into kinetic energy only after contacting a solid. This allowed them to fire through translucent shields and when paired with their flying abilities made them a " +
+                "formidable opponent. Much closer range, subject X8486-101 had a passive aura that converted all energy from incoming physical attacks into harmless bursts of light. In testing, it was shown that the color of light correlated " +
+                "with the amount of energy dissipated.","exotic, kinetic, radiation, whimsical, short-range, long-range"));
+        formulae.add(new Formula2("Boomstick","B0202",8,2,5,2,5,"A short and mid-range 'shotgun'-type Blaster power is almost a guarantee from formula B0202, appropriately named Boomstick. Less than 5% " +
+                "of individuals that consumed formula B0202 showed primarily non-damaging effects, while the rest possessed a violent, high-damage attack. The most common deviations affect the hands or the mind, with around 3% of individuals " +
+                "growing more fingers or hands, and 1% growing one or more additional arms. The exact nature of the damage inflicted cannot easily be predicted, but there is a strange correlation between the resulting power and the last food " +
+                "item consumed by the patient. Our scientists are currently researching this.","reliable, common, simple, short-range, AoE"));
+        formulae.add(new Formula2("Catscratch", "B2582",8,2,3,1,4,"Formula B2582 offers a minor effect or weapon, usually applied to the cape's hands, with a secondary effect that augments repeated " +
+                "attacks on the same target. Augmentations can include added accuracy, damage, attack speed, or enhanced effect. However this augmentation doesn't change between uses (if a patient triggers with an augment of speed, their augment " +
+                "will always be speed). Striker ratings are universal, with a slight lean toward elemental powers. When secondary powers appear, they tend toward Mover and Thinker powers instead of Brute powers, and Tinkers, Masters, Changers, " +
+                "and Blasters have never been seen. Strangely, most mutations tend to affect the spine.","reliable, common, short-range, elemental, simple, singular"));
+        formulae.add(new Formula2("Clad","Q0201",9,5,5,1,7,"95% of the time formula Q0201 presents a Tinker power with a specialty on armor, suits, mechs, or a combination thereof. The other 5% of " +
+                "the time tends to produce parahumans who possessed a second, more durable form very similar to the suits of the other 95%. The exact capabilities and potential augmentations of the technology and powers from Clad were wildly varied, " +
+                "but correlated with the patient's personality and personal background. Deviations were internal, involving missing organs, requiring Tinker technology to stay alive. Thankfully, every deviant with missing organs also possessed " +
+                "the ability to create an apparatus to replace them.","reliable, tinker, defensive, durability, inorganic, shield"));
+        formulae.add(new Formula2("Deadeye","C0404",9,2,4,2,6,"Most formula C0404 patients exhibit a Blaster/Thinker rating, with their Thinker powers aiding their long-range Blaster power in " +
+                "accuracy or target acquisition. This is often, though not always, at the cost of awareness of the immediate vicinity. For those Deadeye patients that switch forms, this commonly appears as disorientation or temporary delirium " +
+                "upon exiting their Blaster/Thinker state. The 'bullets' of Deadeye Blaster powers always do significant damage or possess devastating effects. Their one uniform drawback is a cooldown of sorts, allowing one shot approximately " +
+                "every ten seconds.","reliable, common, long-range, simple, mental, singular"));
+        formulae.add(new Formula2("Pitfall","P3701",6,8,3,0,6,"A strange formula, P3701 (named Pitfall for reasons that will become clear) typically provides patients with the rare Thinker/Shaker " +
+                "classification combination. The actual powers displayed fall under the Thinker category, with a focus on weaponizing the environment around the cape. The quick creation and utilization of improvised traps is seen in many subjects " +
+                "and secondary powers help increase the efficiency of this environmental fighting style. Obviously, Pitfall parahumans are at a massive advantage in complex environments (buildings, cities, etc.) while at a disadvantage in " +
+                "simpler, and more sparsely occupied areas (parking lots, deserts, etc.).","unique, mental, environment, preparation, versatile, utility, processing"));
+        formulae.add(new Formula2("Sigmund","E4725",5,9,2,2,5,"Sigmund parahumans (formula E4725) are designed best to play the long game and work from the shadows. Their powers subtly effect the " +
+                "psychology of those near them or they interact with and work best over the course of days or weeks. These powers run the gambit from understanding the flaws, struggles, and advantages of others to granting flaws and advantages to " +
+                "others. Subject E4725-018 had a far-reaching power that caused others who were competing with them for a position to drop out. One died in a car accident while the others dropped out for a variety of reasons, leaving E4725-018 as " +
+                "the only candidate left. We are unsure exactly how many of the 136 candidates dropped out due to E4725's unconscious involvement and which truly were just bad luck.","mental, others, unique, processing, solution, emotions, " +
+                "preparation, stealth, master"));
+        formulae.add(new Formula2("Slink","H7119",7,5,4,3,4,"Formula H7119 provides, nearly without exception, a partial transformation power that allows for faster movement and contortion through " +
+                "tight spaces. These changes tend to keep the parahuman recognizable, if a bit disconcerting, many with elongated and sharpened features. Most Slink patients also have another minor, seemingly random power tacked on to this powerset. " +
+                "Though this is often a changer power (growing wings/weapons, extending limbs, regeneration, etc.) a significant portion displayed altogether non-Changer-type powers like limited pyrokinesis, an unreliable danger sense, etc. Deviations " +
+                "affect bone structure, contracting the ribs or causing bones to protrude through the skin.","changer, self, versatile, stealth, movement, agility"));
+        formulae.add(new Formula2("Throne","T8811",8,3,7,3,5,"Similar to formula T8120 (aka Deus), Throne provides a Master power that creates a singular, powerful minion based on the patient's views " +
+                "of themselves. These views are exaggerated and made monstrous (very frequently humanoid, but sometimes feral), often with a moderate or minor power. This minion, however is rarely autonomous and in over 90% of cases the patient must " +
+                "pilot the minion, either operating remotely or requiring the patient to partially fuse with the minion. Unlike Deus, every minion created from Throne is a physical being, with a surprising number of organic creations. Customers should be aware, " +
+                "the actual creation of the minion is not instant and can sometimes take up to a minute (not including the patients with a Master/Tinker rating).","creation, master, singular, reliable, powerful, preparation, simple, utility"));
+        formulae.add(new Formula2("Thrust","F6845",6,5,4,1,5,"Precise and linear are the two words best used to describe the Movers produced from formula F6845. Most patients develop a high velocity " +
+                "mover power with limited turning ability. These powers often have interesting interactions with the concept of recoil or involve outputting other effects before, during, or after moving. How these powers define 'linear' movement is " +
+                "interesting, with many subjects being able to stand up and move as if in a straight line, but not being able to turn their heads while moving. One of the more passive capes, subject F6845-113, shunted himself away from any danger in " +
+                "proportion to the threat he was in. He would be stopped by solid walls, releasing the remaining energy, but as far as our scientists could determine he had no upper limit besides that.","movement, self, simple, kinetic"));
+        formulae.add(new Formula2("Well","Q3289",8,4,7,1,7,"Formula Q3289 grants Tinker powers focused aroung a specialized power source, typically an exotic battery or reactor. All equipment built by " +
+                "a Well patient connects to this reactor. Equipment is typically larger in scale and heft, with larger weapons such as rocket launchers and miniguns much more common than typical pistols or rifles. These larger weapons are also much " +
+                "stronger than their baseline equivalents and are made even more powerful by secondary effects the source feeds into all connected equipment. These power sources, however, are incredibly dangerous if damaged or compromised and everyone " +
+                "in the vicinity of a Well reactor going critical, including the builder of the reactor, are advised to get as far away as possible.","tinker, singular, preparation, versatile, AoE"));
+        formulae.add(new Formula2("Coat","W1069",4,8,4,0,6,"Subjects who imbibed formula W1069 displayed powers that covered large areas of the environment or large objects in a reactive sheen that " +
+                "is the catalyst to a larger power. These coatings are usually iridescent and bright in color, although many do have duller tones. When the coating is touched or triggered the sheen floats off the surface as the power is released. " +
+                "The powers caused vary, though there is a mild correlation with the mindset of the patient during the trigger event. Everything form sticking objects together to transmutation to summoning minions have all been seen. Even directly offensive " +
+                "effects, although those are rarer.","whimsical, unique, safe, AoE, environment, object-oriented, utility"));
 
         Collections.sort(formulae,Formula2::compareTo);
     }
 
     private void initializeKeywords()
-    {
-        //keywords that describe the look/feel of the power-------------------------------------------------------------
+    {   //keywords that describe the look/feel of the power-------------------------------------------------------------
 
         keywords.add("terrifying");     //Powers that are disconcerting to watch
         keywords.add("otherworldly");   //Powers that are otherworldly to look at
@@ -848,7 +966,6 @@ public class Database2
 
         //keywords about the general use of the power-------------------------------------------------------------------
 
-        keywords.add(" ");
         keywords.add("formula modifier");       //Special formula used to modify outcomes of other formulas
 
         keywords.add("creation");       //Powers that create things (non-Tinker)
@@ -893,7 +1010,7 @@ public class Database2
 
         keywords.add("mental");         //Powers that involve the mind
             keywords.add("processing");     //Powers that vastly increase processing of stimuli
-            keywords.add("solution");       //Powers that help solve problems
+            keywords.add("solution");       //Powers that help solve problems (with data not available to normal humans)
             keywords.add("skills");         //Powers that affect skills or skill acquisition
             keywords.add("emotions");       //Powers that involve emotions
             keywords.add("precognition");   //Powers that see into the future
@@ -923,6 +1040,7 @@ public class Database2
             keywords.add("water");          //Water powers
             keywords.add("temperature");    //Temperature powers
             keywords.add("electricity");    //Electrical powers
+            keywords.add("sand");           //Sand powers
             keywords.add("stone");          //Rock powers
             keywords.add("metal");          //Metal powers
             keywords.add("air");            //Air powers
@@ -932,6 +1050,7 @@ public class Database2
         keywords.add("shadow");         //Powers that employ darkness and shadow
         keywords.add("force field");    //Powers that employ force fields
         keywords.add("death");          //Powers involving death
+        keywords.add("sleep");          //Powers involving sleep
 
         keywords.add("exotic");         //Powers that have exotic effects (time, dimensions, etc.)
             keywords.add("space");          //Powers that deal with spacial manipulation
@@ -950,13 +1069,13 @@ public class Database2
 
         //keywords that deal with the values of a formula---------------------------------------------------------------
 
-        keywords.add("safe");           //Deviation of 0,1,2
+        keywords.add("safe");           //Deviation of 0
         keywords.add("deviant");        //Deviation of 8,9,10
 
         keywords.add("variable");       //Reliability of 1,2,3
         keywords.add("reliable");       //Reliability of 8,9,10
 
-        keywords.add("powerful");       //Power of 8,9,10
+        keywords.add("powerful");       //Power of 7,8,9,10
 
         keywords.add("free");           //Price of 0
         keywords.add("cheap");          //Price of 1,2,3
@@ -965,7 +1084,106 @@ public class Database2
         keywords.add("unique");         //Originality of 8,9,10
         keywords.add("common");          //Originality of 1,2,3
 
+        //subdivisions of the keywords----------------------------------------------------------------------------------
+
+        rangewords.add("aura");
+        rangewords.add("self");
+        rangewords.add("others");
+        rangewords.add("object-oriented");
+        rangewords.add("environment");
+        rangewords.add("singular");
+        rangewords.add("multitude");
+        rangewords.add("short-range");
+        rangewords.add("mid-range");
+        rangewords.add("long-range");
+
+        elementwords.add("inorganic");      //Primarily affects inorganic matter
+        elementwords.add("technology");     //Powers involving technology are common
+        elementwords.add("organic");        //Involves life/living things
+        elementwords.add("animal");         //Powers involving animal biology
+        elementwords.add("plant");          //Powers involving plant biology
+        elementwords.add("elemental");      //Elemental abilities common
+        elementwords.add("fire");           //Fire, or lava-based powers
+        elementwords.add("acid");           //Acidic powers
+        elementwords.add("ice");            //Ice powers
+        elementwords.add("water");          //Water powers
+        elementwords.add("temperature");    //Temperature powers
+        elementwords.add("electricity");    //Electrical powers
+        elementwords.add("sand");           //Sand powers
+        elementwords.add("stone");          //Rock powers
+        elementwords.add("metal");          //Metal powers
+        elementwords.add("air");            //Air powers
+        elementwords.add("sound");          //Sound powers
+        elementwords.add("kinetic");        //Powers that affect kinetic energy
+        elementwords.add("shadow");         //Powers that employ darkness and shadow
+        elementwords.add("force field");    //Powers that employ force fields
+        elementwords.add("death");          //Powers involving death
+        elementwords.add("sleep");          //Powers involving sleep
+        elementwords.add("exotic");         //Powers that have exotic effects (time, dimensions, etc.)
+        elementwords.add("space");          //Powers that deal with spacial manipulation
+        elementwords.add("time");           //Powers that deal with time manipulation
+        elementwords.add("dimensional");    //Powers that deal with dimensional manipulation
+        elementwords.add("gravity");        //Powers that deal with gravity manipulation
+        elementwords.add("radiation");      //Powers that deal with radiation of various kinds
+        elementwords.add("mental");         //Powers that involve the mind
+        elementwords.add("processing");     //Powers that vastly increase processing of stimuli
+        elementwords.add("solution");       //Powers that help solve problems (with data not available to normal humans)
+        elementwords.add("skills");         //Powers that affect skills or skill acquisition
+        elementwords.add("emotions");       //Powers that involve emotions
+        elementwords.add("precognition");   //Powers that see into the future
+        elementwords.add("postcognition");  //Powers that see into the past
+        elementwords.add("sensory");        //Sensory-type powers
+        elementwords.add("stealth");        //High chance of powers useful in espionage
+        elementwords.add("shield");         //Some sort of shielding is common
+        elementwords.add("durability");     //Increased durability is common
+        elementwords.add("regeneration");   //Regeneration is common
+        elementwords.add("resurrection");   //Powers involving resurrection
+        elementwords.add("strength");       //Increased strength is common
+        elementwords.add("size");         //Increased size is common
+        elementwords.add("movement");       //Mover powers common
+        elementwords.add("agility");        //Increased agility is common
+        elementwords.add("flight");         //Flight is common
+        elementwords.add("teleportation");  //Teleportation is common
+
+        descriptors.add("terrifying");     //Powers that are disconcerting to watch
+        descriptors.add("otherworldly");   //Powers that are otherworldly to look at
+        descriptors.add("whimsical");      //Powers that evoke whimsy
+        descriptors.add("theme");          //Powers with a theme
+        descriptors.add("Olympic");    //Powers in the Olympic Pantheon series
+        descriptors.add("recreational");   //Powers that are more recreational than traditional useful
+        descriptors.add("simple");         //Powers that are easy to understand and use
+        descriptors.add("complex");        //Powers that are difficult to understand and use
+        descriptors.add("formula modifier");       //Special formula used to modify outcomes of other formulas
+        descriptors.add("creation");       //Powers that create things (non-Tinker)
+        descriptors.add("grab-bag");       //Grab-bag capes
+        descriptors.add("telekinesis");    //Telekinesis; self explanatory
+        descriptors.add("utility");        //Powers that provides indirect benefits in combat
+        descriptors.add("defensive");      //Powers that are always primarily defensive
+        descriptors.add("lethal");         //Powers that are always offensive and very dangerous
+        descriptors.add("temporary");      //Power effects always revert to normal
+        descriptors.add("permanent");      //Power effects are hard to reverse
+        descriptors.add("preparation");    //Preparation is needed to maximize powers
+        descriptors.add("versatile");      //Powers that often have wide applications
+        descriptors.add("AoE");            //Area of Effect powers
+        descriptors.add("tinker");         //Tinker powers common
+        descriptors.add("changer");        //Alternate forms/transformations are common
+        descriptors.add("master");         //Powers that give control of minions commonly
+        descriptors.add("power-affecting");//Trump powers
+        descriptors.add("safe");           //Deviation of 0
+        descriptors.add("deviant");        //Deviation of 8,9,10
+        descriptors.add("variable");       //Reliability of 1,2,3
+        descriptors.add("reliable");       //Reliability of 8,9,10
+        descriptors.add("powerful");       //Power of 7,8,9,10
+        descriptors.add("free");           //Price of 0
+        descriptors.add("cheap");          //Price of 1,2,3
+        descriptors.add("expensive");      //Price of 8,9,10
+        descriptors.add("unique");         //Originality of 8,9,10
+        descriptors.add("common");          //Originality of 1,2,3
+
         Collections.sort(keywords);
+        Collections.sort(rangewords);
+        Collections.sort(elementwords);
+        Collections.sort(descriptors);
     }
 
     public static void main(String[] args)
@@ -988,8 +1206,19 @@ public class Database2
             System.out.println(alphabet.get(i) + ": " + x);
             x = 0;
         }
+        x=total;
         System.out.println("Total: " + total);
-        System.out.println(x*(x-1)*(x-2)+x*(x-1)+x + " Combinations (not including varied percentages)");
+        //BigInteger base1 = BigInteger.valueOf(x);                                                                     //Use this part if you ever exceed the storage size for a long (unlikely)
+        //BigInteger base2 = BigInteger.valueOf(x-1);
+        //BigInteger base3 = BigInteger.valueOf(x-2);
+        //BigInteger number1 = base1.multiply(base2).multiply(base3);
+        //BigInteger number2 = base1.multiply(base2);
+        //BigInteger number3 = base1;
+        //BigInteger combinations = number1.add(number2).add(number3);
+        //String string = combinations.toString();
+        //System.out.println(string + " Combinations (not including varied percentages)");
+        System.out.println(x*(x-1)*(x-2)+x*(x-1)+x + ":::1, 2, or 3 vial combinations (not including varied percentages)");
+        System.out.println(x*(x-1)+x + ":::1 or 2 vial combinations (not including varied percentages)");
     }
 }
 //Series List                                                                 Common Words In Series
@@ -997,11 +1226,11 @@ public class Database2
 //B series have close range formulas                                               "short-range"
 //C series have ranged formulas                                             "mid-range" or "long-range"
 //D series have defensive/durable/protective formulas                               "defensive"
-//E series have area of effect formulas                                                "AoE"                //under review
+//E series have mental, offensive formulas                                     "mental" and "others"
 //F series have movement formulas                                                    "movement"
 //G series have stealth/espionage formulas                                           "stealth"
 //H series have transformation formulas                                              "changer"
-//I series have formulas that only affect the user                                    "self"                //under review
+//I series have formulas that only affect the user                                    "self"
 //J series have elemental formulas                                                  "elemental"
 //K series have formulas with powers that have trade-offs
 //L series have formulas with a high chance of deviation                             "deviant"
