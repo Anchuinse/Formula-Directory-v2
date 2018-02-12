@@ -14,7 +14,7 @@ public class Interface2 extends JFrame implements ActionListener
 {
     JPanel main_panel = new JPanel();
     JPanel welcome = new JPanel();
-    Timer timer = new Timer(10, this);            //delay of the welcome screen (4500 was original delay)
+    Timer timer = new Timer(4500, this);            //delay of the welcome screen (4500 was original delay)
     Database2 database = new Database2();
     ArrayList<Formula2> formulae = database.getFormulae();
     JComboBox selection1 = elementWords();
